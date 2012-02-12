@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+mOnionO - The mobile Onion Observer
+Copyright (C) 2012 Jens Bruhn (moniono@gmx.net)
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. 
+ -->
+<resources>
+    
+    <string name="app_name">mOnionO</string>
+
+    <string name="no_nodes">No nodes configured yet!</string>
+    
+    <string name="menu_search">Search</string>
+    <string name="menu_favorites">Favorites</string>
+    <string name="menu_delete">Delete Node</string>
+    <string name="menu_edit">Edit Node</string>
+    <string name="add_relay">Search</string>
+    <string name="edit_relay">Favorites</string>
+    <string name="nickname">Nickname</string>
+    <string name="fingerprint">Fingerprint</string>
+    <string name="ip">OR-Address</string>
+    <string name="search">Search</string>
+    <string name="search_string">Search results for</string>
+    <string name="search_hint">Name, IP or Hash</string>
+    <string name="contact">Contact</string>
+    <string name="country">Country</string>
+    <string name="platform">Platform</string>
+    <string name="dir_address">DIR-address</string>
+    <string name="pool_assignment">Pool Assignment</string>
+    
+    <string name="desc_published">Published</string>
+    <string name="desc_valid_after">Valid after</string>
+    <string name="desc_valid_until">Valid until</string>
+    
+    <string name="restart_timestamp">Restart Time</string>
+    <string name="bandwidth">Bandwidth </string>
+    <string name="family">Family</string>
+    
+    <string name="dialog_loading">Loading search data ...</string>
+    <string name="dialog_searching">Searching ...</string>
+    
+    <string name="dialog_loading_details">Loading node details ...</string>
+    
+    <string name="history_chart_read">Read Access</string>
+    <string name="history_chart_write">Write Access</string>
+    
+    <string name="day">Day</string>
+    <string name="days">Days</string>
+    
+    <string name="week">Week</string>
+    <string name="weeks">Weeks</string>
+    
+    <string name="month">Month</string>
+    <string name="months">Months</string>
+    
+    <string name="year">Year</string>
+    <string name="years">Years</string>
+    
+    <string name="history_interval_selection">Select interval</string>
+        <string name="common">Common</string>
+    <string name="flags">Flags</string>
+    <string name="policy">Policy</string>
+    <string name="history">History</string>
+	
+</resources>

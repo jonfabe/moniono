@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+mOnionO - The mobile Onion Observer
+Copyright (C) 2012 Jens Bruhn (moniono@gmx.net)
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. 
+ -->
+<resources>
+
+    <string name="app_name">mOnionO</string>
+    <string name="no_nodes">Bisher keine Knoten konfiguriert!</string>
+    <string name="menu_search">Finden</string>
+    <string name="menu_favorites">Favoriten</string>
+    <string name="menu_delete">Knoten entfernen</string>
+    <string name="menu_edit">Knoten bearbeiten</string>
+    <string name="add_relay">Finden</string>
+    <string name="edit_relay">Favoriten</string>
+    <string name="nickname">Nickname</string>
+    <string name="fingerprint">Fingerprint</string>
+    <string name="ip">OR-Adresse</string>
+    <string name="search">Finden</string>
+    <string name="search_string">Suchergebnisse für</string>
+    <string name="search_hint">Name, IP oder Hash</string>
+    <string name="contact">Kontakt</string>
+    <string name="country">Land</string>
+    <string name="platform">Plattform</string>
+    <string name="dir_address">DIR-Adresse</string>
+    <string name="pool_assignment">Pool-Zuordnung</string>
+    <string name="desc_published">Veröffentlicht</string>
+    <string name="desc_valid_after">Gültig ab</string>
+    <string name="desc_valid_until">Gültig bis</string>
+    <string name="restart_timestamp">Restart-Zeitpunkt</string>
+    <string name="bandwidth">Bandbreite </string>
+    <string name="family">Familie</string>
+    <string name="dialog_loading">Lade Knotendaten ...</string>
+    <string name="dialog_searching">Suche ...</string>
+    <string name="dialog_loading_details">Lade Knotendetails ...</string>
+    <string name="history_chart_read">Lesezugriff</string>
+    <string name="history_chart_write">Schreibzugriff</string>
+    <string name="day">Tag</string>
+    <string name="days">Tage</string>
+    <string name="week">Woche</string>
+    <string name="weeks">Wochen</string>
+    <string name="month">Monat</string>
+    <string name="months">Monate</string>
+    <string name="year">Jahr</string>
+    <string name="years">Jahre</string>
+    <string name="history_interval_selection">Intervall wählen</string>
+    <string name="common">Allgemein</string>
+    <string name="flags">Flags</string>
+    <string name="policy">Policy</string>
+    <string name="history">History</string>
+
+</resources>
