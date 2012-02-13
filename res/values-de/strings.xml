@@ -36,13 +36,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     <string name="contact">Kontakt</string>
     <string name="country">Land</string>
     <string name="platform">Plattform</string>
-    <string name="dir_address">DIR-Adresse</string>
+    <string name="dir_address">Dir-Adresse</string>
     <string name="pool_assignment">Pool-Zuordnung</string>
     <string name="desc_published">Veröffentlicht</string>
     <string name="desc_valid_after">Gültig ab</string>
     <string name="desc_valid_until">Gültig bis</string>
     <string name="restart_timestamp">Restart-Zeitpunkt</string>
-    <string name="bandwidth">Bandbreite </string>
+    <string name="bandwidth">Bandbreite</string>
     <string name="family">Familie</string>
     <string name="dialog_loading">Lade Knotendaten ...</string>
     <string name="dialog_searching">Suche ...</string>

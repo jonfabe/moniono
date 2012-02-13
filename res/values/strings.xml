@@ -31,14 +31,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     <string name="edit_relay">Favorites</string>
     <string name="nickname">Nickname</string>
     <string name="fingerprint">Fingerprint</string>
-    <string name="ip">OR-Address</string>
+    <string name="ip">OR Address</string>
     <string name="search">Search</string>
     <string name="search_string">Search results for</string>
     <string name="search_hint">Name, IP or Hash</string>
     <string name="contact">Contact</string>
     <string name="country">Country</string>
     <string name="platform">Platform</string>
-    <string name="dir_address">DIR-address</string>
+    <string name="dir_address">Dir address</string>
     <string name="pool_assignment">Pool Assignment</string>
     
     <string name="desc_published">Published</string>
@@ -46,7 +46,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     <string name="desc_valid_until">Valid until</string>
     
     <string name="restart_timestamp">Restart Time</string>
-    <string name="bandwidth">Bandwidth </string>
+    <string name="bandwidth">Bandwidth</string>
     <string name="family">Family</string>
     
     <string name="dialog_loading">Loading search data ...</string>
