@@ -15,13 +15,14 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. 
- -->
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. 
+-->
 <resources>
+
     <style name="NodeEntry">
         <item name="android:textColor">#FFFFFF</item>
     </style>
-    
+
     <style name="NodeEntry.Red">
         <item name="android:textColor">#FF0000</item>
     </style>
@@ -30,4 +31,38 @@ with this program; if not, write to the Free Software Foundation, Inc.,
         <item name="android:textColor">#00FF00</item>
     </style>
     
+   <style name="TabStyle" parent="@android:style/Widget.TabWidget">
+        <item name="android:textColor">@drawable/tab_text_selector</item>
+    </style>
+    
+       <style name="mOnionOProgressBar"> parent="@android:style/Widget.ProgressBar">
+    <item name="android:windowBackground">@color/notify</item>
+    <item name="android:textColor">@color/white_text</item>
+</style>
+       
+
+    <style name="mOnionOStyle" parent="@android:style/Theme.Light.NoTitleBar">
+        <item name="android:tabWidgetStyle">@style/TabStyle</item>
+        <item name="android:textColor">@color/normalText</item>
+        <item name="android:windowBackground">@color/background</item>
+    	<item name="android:colorBackground">@color/background</item>
+    	<item name="android:tabStripEnabled">false</item>
+    	<item name="android:typeface">monospace</item>
+    	<item name="android:progressBarStyle">@style/mOnionOProgressBar</item>
+    </style>
+    
+    <style name="mOnionOStyle.TableTitleCell">
+    	<item name="android:paddingRight">15px</item>
+    </style>
+    
+    <style name="mOnionOStyle.ActionBarImage">
+    	<item name="android:padding">5px</item>
+    </style>
+    
+    <style name="mOnionOStyle.Section">
+    	<item name="android:paddingTop">5px</item>
+    	<item name="android:paddingBottom">5px</item>
+    </style>
+        
+
 </resources>

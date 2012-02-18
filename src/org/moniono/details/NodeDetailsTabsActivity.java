@@ -23,7 +23,12 @@ import static org.moniono.util.CommonExtraId.IS_RELAY;
 import static org.moniono.util.CommonExtraId.NODE_DATA;
 import static org.moniono.util.CommonExtraId.NODE_HASH;
 
+import java.util.Set;
+
 import org.moniono.R;
+import org.moniono.search.BandwidthData;
+import org.moniono.search.BandwidthDataManager;
+import org.moniono.search.BandwidthIntervalTimespan;
 import org.moniono.search.DetailsData;
 import org.moniono.search.NodeFlag;
 
@@ -31,7 +36,13 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TabHost;
+import android.widget.TabWidget;
+import android.widget.TextView;
 
 public class NodeDetailsTabsActivity extends TabActivity {
 
@@ -57,12 +68,17 @@ public class NodeDetailsTabsActivity extends TabActivity {
 				extras.getBoolean(IS_RELAY.toString()));
 
 		// Initialize a TabSpec for each tab and add it to the TabHost
+		View commonIndicator = LayoutInflater.from(this).inflate(
+				R.layout.moniono_tab_widget, getTabWidget(), false);
+		TextView commonTitle = (TextView) commonIndicator
+				.findViewById(R.id.title);
+		commonTitle.setText(getResources().getString(R.string.common));
+		ImageView commonIcon = (ImageView) commonIndicator
+				.findViewById(R.id.icon);
+		commonIcon.setImageResource(R.drawable.ic_tab_common);
 
-		TabHost.TabSpec overviewSpec = tabHost
-				.newTabSpec("common")
-				.setIndicator(getResources().getString(R.string.common),
-						res.getDrawable(R.drawable.details))
-				.setContent(overviewIntent);
+		TabHost.TabSpec overviewSpec = tabHost.newTabSpec("common")
+				.setIndicator(commonIndicator).setContent(overviewIntent);
 		tabHost.addTab(overviewSpec);
 
 		NodeFlag[] flags = data.getFlags();
@@ -75,11 +91,17 @@ public class NodeDetailsTabsActivity extends TabActivity {
 					extras.getBoolean(IS_RELAY.toString()));
 
 			// Initialize a TabSpec for each tab and add it to the TabHost
-			TabHost.TabSpec flagsSpec = tabHost
-					.newTabSpec("flags")
-					.setIndicator(getResources().getString(R.string.flags),
-							res.getDrawable(R.drawable.flags))
-					.setContent(flagsIntent);
+			View flagsIndicator = LayoutInflater.from(this).inflate(
+					R.layout.moniono_tab_widget, getTabWidget(), false);
+			TextView flagsTitle = (TextView) flagsIndicator
+					.findViewById(R.id.title);
+			flagsTitle.setText(getResources().getString(R.string.flags));
+			ImageView flagsIcon = (ImageView) flagsIndicator
+					.findViewById(R.id.icon);
+			flagsIcon.setImageResource(R.drawable.ic_tab_flags);
+
+			TabHost.TabSpec flagsSpec = tabHost.newTabSpec("flags")
+					.setIndicator(flagsIndicator).setContent(flagsIntent);
 			tabHost.addTab(flagsSpec);
 		}
 
@@ -93,29 +115,54 @@ public class NodeDetailsTabsActivity extends TabActivity {
 					extras.getBoolean(IS_RELAY.toString()));
 
 			// Initialize a TabSpec for each tab and add it to the TabHost
-			TabHost.TabSpec policySpec = tabHost
-					.newTabSpec("policy")
-					.setIndicator(getResources().getString(R.string.policy),
-							res.getDrawable(R.drawable.policy))
-					.setContent(policyIntent);
+			View policyIndicator = LayoutInflater.from(this).inflate(
+					R.layout.moniono_tab_widget, getTabWidget(), false);
+			TextView policyTitle = (TextView) policyIndicator
+					.findViewById(R.id.title);
+			policyTitle.setText(getResources().getString(R.string.policy));
+			ImageView policyIcon = (ImageView) policyIndicator
+					.findViewById(R.id.icon);
+			policyIcon.setImageResource(R.drawable.ic_tab_policy);
+
+			TabHost.TabSpec policySpec = tabHost.newTabSpec("policy")
+					.setIndicator(policyIndicator).setContent(policyIntent);
 			tabHost.addTab(policySpec);
 		}
 
-		Intent historyIntent = new Intent().setClass(this,
-				NodeDetailsHistoryActivity.class);
-		historyIntent.putExtra(NODE_HASH.toString(), data.getFingerprint());
-		historyIntent.putExtra(IS_RELAY.toString(),
-				extras.getBoolean(IS_RELAY.toString()));
+		BandwidthDataManager bManager = BandwidthDataManager.getInstance(this);
+		BandwidthData bData = bManager.getData(data.getFingerprint());
+		Set<BandwidthIntervalTimespan> intervals = bData.getTimespans();
+		if (intervals != null && intervals.size() > 0) {
 
-		// Initialize a TabSpec for each tab and add it to the TabHost
-		TabHost.TabSpec policySpec = tabHost
-				.newTabSpec("history")
-				.setIndicator(getResources().getString(R.string.history),
-						res.getDrawable(R.drawable.history))
-				.setContent(historyIntent);
-		tabHost.addTab(policySpec);
+			Intent historyIntent = new Intent().setClass(this,
+					NodeDetailsHistoryActivity.class);
+			historyIntent.putExtra(NODE_HASH.toString(), data.getFingerprint());
+			historyIntent.putExtra(IS_RELAY.toString(),
+					extras.getBoolean(IS_RELAY.toString()));
+
+			// Initialize a TabSpec for each tab and add it to the TabHost
+			View historyIndicator = LayoutInflater.from(this).inflate(
+					R.layout.moniono_tab_widget, getTabWidget(), false);
+			TextView historyTitle = (TextView) historyIndicator
+					.findViewById(R.id.title);
+			historyTitle.setText(getResources().getString(R.string.history));
+			ImageView historyIcon = (ImageView) historyIndicator
+					.findViewById(R.id.icon);
+			historyIcon.setImageResource(R.drawable.ic_tab_history);
+
+			TabHost.TabSpec policySpec = tabHost.newTabSpec("history")
+					.setIndicator(historyIndicator).setContent(historyIntent);
+			tabHost.addTab(policySpec);
+		}
 
 		tabHost.setCurrentTab(0);
+
+		TabWidget tabWidget = getTabWidget();
+		for (int i = 0; i < tabWidget.getChildCount(); i++) {
+			RelativeLayout tabLayout = (RelativeLayout) tabWidget.getChildAt(i);
+			tabLayout.setBackgroundDrawable(res
+					.getDrawable(R.drawable.tab_selector));
+		}
 
 	}
 

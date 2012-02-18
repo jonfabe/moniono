@@ -26,6 +26,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/flag_entry"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        style="@style/mOnionOStyle.Section" />
     
 </LinearLayout>

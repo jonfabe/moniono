@@ -26,35 +26,40 @@ with this program; if not, write to the Free Software Foundation, Inc.,
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        style="@style/mOnionOStyle.Section">
 
         <ImageView
             android:id="@+id/bookmark_icon_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/bookmark"
-            android:visibility="visible" />
+            android:visibility="visible"
+            style="@style/mOnionOStyle.ActionBarImage"/>
 
         <ImageView
             android:id="@+id/search_icon_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_menu_search"
-            android:visibility="visible" />
+            android:visibility="visible"
+            style="@style/mOnionOStyle.ActionBarImage"/>
 
         <ImageView
             android:id="@+id/relay_icon_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/relay"
-            android:visibility="visible" />
+            android:visibility="visible"
+            style="@style/mOnionOStyle.ActionBarImage"/>
 
         <ImageView
             android:id="@+id/bridge_icon_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/bridge"
-            android:visibility="visible" />
+            android:visibility="visible"
+            style="@style/mOnionOStyle.ActionBarImage"/>
     </LinearLayout>
 
     <LinearLayout
@@ -62,7 +67,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
         android:id="@+id/search_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal" 
+        style="@style/mOnionOStyle.Section">
 
         <TextView
             android:id="@+id/search_label"
@@ -70,8 +76,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:text="@string/search"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:visibility="gone" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:visibility="gone" 
+            style="@style/mOnionOStyle.TableTitleCell"/>
 
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -89,7 +96,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                 android:hint="@string/search_hint"
                 android:visibility="gone"
                 android:scrollHorizontally="true"
-                android:singleLine="true" />
+                android:singleLine="true"/>
 
             <ImageView
                 android:id="@+id/ic_menu_search"
@@ -110,7 +117,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
         android:gravity="center_horizontal"
         android:text="@string/search"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:visibility="gone" />
+        android:visibility="gone" 
+        style="@style/mOnionOStyle.Section"/>
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView1"

@@ -37,35 +37,40 @@ with this program; if not, write to the Free Software Foundation, Inc.,
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        style="@style/mOnionOStyle.Section">
 
         <ImageView
             android:id="@+id/bookmark_icon_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/bookmark"
-            android:visibility="visible" />
+            android:visibility="visible" 
+            style="@style/mOnionOStyle.ActionBarImage"/>
 
         <ImageView
             android:id="@+id/edit_name_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/edit"
-            android:visibility="visible" />
+            android:visibility="visible" 
+            style="@style/mOnionOStyle.ActionBarImage"/>
 
         <ImageView
             android:id="@+id/reset_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/refresh"
-            android:visibility="visible" />
+            android:visibility="visible" 
+            style="@style/mOnionOStyle.ActionBarImage"/>
 
         <ImageView
             android:id="@+id/save_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/save"
-            android:visibility="visible" />
+            android:visibility="visible"
+            style="@style/mOnionOStyle.ActionBarImage"/>
     </LinearLayout>
 
     <HorizontalScrollView
@@ -77,7 +82,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/relay_details_table"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
 
             <TableRow
                 android:id="@+id/relay_details_nickname_row"
@@ -90,7 +95,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="@string/nickname" />
+                    android:text="@string/nickname" style="@style/mOnionOStyle.TableTitleCell"/>
 
                 <EditText
                     android:id="@+id/nickname_input"
@@ -117,7 +122,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                     android:id="@android:id/empty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/fingerprint" />
+                    android:text="@string/fingerprint" style="@style/mOnionOStyle.TableTitleCell"/>
 
                 <TextView
                     android:id="@+id/relay_details_hash"
@@ -136,7 +141,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                     android:id="@android:id/empty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/ip" />
+                    android:text="@string/ip" style="@style/mOnionOStyle.TableTitleCell"/>
 
                 <TextView
                     android:id="@+id/relay_details_ip"
@@ -155,7 +160,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                     android:id="@android:id/empty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/bandwidth" />
+                    android:text="@string/bandwidth" style="@style/mOnionOStyle.TableTitleCell"/>
 
                 <TextView
                     android:id="@+id/relay_details_bandwidth"
@@ -174,7 +179,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                     android:id="@android:id/empty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dir_address" />
+                    android:text="@string/dir_address" style="@style/mOnionOStyle.TableTitleCell"/>
 
                 <TextView
                     android:id="@+id/relay_details_dir_address"
@@ -187,13 +192,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
-                android:visibility="gone" >
+                android:visibility="gone">
 
                 <TextView
                     android:id="@android:id/empty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/restart_timestamp" />
+                    android:text="@string/restart_timestamp"
+                    style="@style/mOnionOStyle.TableTitleCell"/>"
 
                 <TextView
                     android:id="@+id/relay_details_restart_time"
@@ -212,7 +218,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                     android:id="@android:id/empty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/contact" />
+                    android:text="@string/contact" style="@style/mOnionOStyle.TableTitleCell"/>
 
                 <TextView
                     android:id="@+id/relay_details_contact"
@@ -231,7 +237,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                     android:id="@android:id/empty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/platform" />
+                    android:text="@string/platform" style="@style/mOnionOStyle.TableTitleCell"/>
 
                 <TextView
                     android:id="@+id/relay_details_platform"
@@ -250,7 +256,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                     android:id="@android:id/empty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/country" />
+                    android:text="@string/country" style="@style/mOnionOStyle.TableTitleCell"/>
 
                 <TextView
                     android:id="@+id/relay_details_country"
@@ -269,7 +275,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                     android:id="@android:id/empty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/pool_assignment" />
+                    android:text="@string/pool_assignment" style="@style/mOnionOStyle.TableTitleCell"/>
 
                 <TextView
                     android:id="@+id/relay_details_pool_assignment"
@@ -288,7 +294,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                     android:id="@android:id/empty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/family" />
+                    android:text="@string/family" style="@style/mOnionOStyle.TableTitleCell"/>
 
                 <ListView
 	                android:id="@+id/relay_details_family_list"

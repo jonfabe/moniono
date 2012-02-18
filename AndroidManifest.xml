@@ -19,8 +19,8 @@
  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.moniono"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="0"
+    android:versionName="0.0.1-alpha" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -28,7 +28,7 @@
 
     <application
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" >
+        android:label="@string/app_name" android:theme="@style/mOnionOStyle">
         <activity
             android:label="@string/app_name"
             android:name=".main.MonionoActivity" >
