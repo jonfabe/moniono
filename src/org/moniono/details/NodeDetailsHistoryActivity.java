@@ -19,6 +19,7 @@
 
 package org.moniono.details;
 
+import static org.moniono.util.CommonExtraId.NODE_DATA;
 import static org.moniono.util.CommonExtraId.NODE_HASH;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import org.moniono.R;
 import org.moniono.search.BandwidthData;
 import org.moniono.search.BandwidthDataManager;
 import org.moniono.search.BandwidthIntervalTimespan;
+import org.moniono.search.DetailsData;
 import org.moniono.util.LogTags;
 
 import android.app.Activity;
@@ -37,7 +39,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -77,9 +78,11 @@ public class NodeDetailsHistoryActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 
 		String hash = extras.getString(NODE_HASH.toString());
+		DetailsData details = (DetailsData) extras.get(NODE_DATA.toString());
 
-		BandwidthData bData = BandwidthDataManager.getInstance(this).getData(
-				hash);
+		BandwidthData bData = details.getBandwidthData(); 
+//				BandwidthDataManager.getInstance(this).getData(
+//				hash);
 		Set<BandwidthIntervalTimespan> timespans = bData.getTimespans();
 
 		MatrixCursor cursor = new MatrixCursor(new String[] { "_id", "entry" },

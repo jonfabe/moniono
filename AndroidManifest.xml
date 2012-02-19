@@ -60,6 +60,15 @@
         <activity
             android:label="@string/app_name"
             android:name=".details.NodeDetailsTabsActivity" />
+        <activity
+            android:label="@string/app_name"
+            android:name=".details.AboutActivity" />
+        <activity
+            android:label="@string/app_name"
+            android:name=".details.LicenseActivity" />
+        <activity
+            android:label="@string/app_name"
+            android:name=".details.HelpActivity" />
     </application>
 
 </manifest>

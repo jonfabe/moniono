@@ -37,7 +37,6 @@ public class NodeDetailsFetchThread implements Runnable {
 	private Handler handler = null;
 	private int code = -1;
 	private DetailsData data = null;
-	private BandwidthData bdata = null;
 
 	NodeDetailsFetchThread(MonionoActivity iniCtx, String iniHash,
 			String iniName, boolean iniIsRelay, int iniCode,
@@ -51,9 +50,9 @@ public class NodeDetailsFetchThread implements Runnable {
 	}
 
 	public void run() {
+		BandwidthData bdata = BandwidthDataManager.getInstance(this.ctx).getData(hash);
 		this.data = DetailsDataManager.getInstance(this.ctx).getData(
-				this.name, this.hash);
-		this.bdata = BandwidthDataManager.getInstance(this.ctx).getData(hash);
+				this.name, this.hash,bdata);
 		this.handler.sendEmptyMessage(0);
 	}
 
@@ -75,10 +74,6 @@ public class NodeDetailsFetchThread implements Runnable {
 
 	public DetailsData getData() {
 		return this.data;
-	}
-
-	public BandwidthData getBandwidthData() {
-		return bdata;
 	}
 
 }

@@ -137,6 +137,7 @@ public class NodeDetailsTabsActivity extends TabActivity {
 			Intent historyIntent = new Intent().setClass(this,
 					NodeDetailsHistoryActivity.class);
 			historyIntent.putExtra(NODE_HASH.toString(), data.getFingerprint());
+			historyIntent.putExtra(NODE_DATA.toString(), data);
 			historyIntent.putExtra(IS_RELAY.toString(),
 					extras.getBoolean(IS_RELAY.toString()));
 

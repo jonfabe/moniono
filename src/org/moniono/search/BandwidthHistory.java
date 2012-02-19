@@ -19,9 +19,10 @@
 
 package org.moniono.search;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class BandwidthHistory {
+public class BandwidthHistory implements Serializable{
 
 	private Calendar firstTimestamp;
 	private Calendar lastTimestamp;

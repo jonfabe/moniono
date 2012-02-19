@@ -62,5 +62,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     <string name="flags">Flags</string>
     <string name="policy">Policy</string>
     <string name="history">History</string>
+    <string name="license">Lizenz</string>
+    <string name="info">Info</string>
+    <string name="help">Hilfe</string>
+    <string name="close">Schließen</string>
 
 </resources>

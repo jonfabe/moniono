@@ -56,12 +56,12 @@ public class DetailsDataManager extends DataManager {
 		super(iniCtx);
 	}
 
-	public DetailsData getData(String name, String hash) {
+	public DetailsData getData(String name, String hash,BandwidthData bData) {
 		DetailsData result = this.knownDetails.get(hash);
 		if (result == null || !result.isValid()) {
 			JSONObject json = this.getBaseObject(hash);
 			if (json != null) {
-				result = new DetailsData(json, name);
+				result = new DetailsData(json, name,bData);
 				this.knownDetails.put(hash, result);
 			} else {
 				result = new DetailsData(name, hash);

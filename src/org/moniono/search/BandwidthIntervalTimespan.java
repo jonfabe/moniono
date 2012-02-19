@@ -19,11 +19,13 @@
 
 package org.moniono.search;
 
+import java.io.Serializable;
+
 import org.moniono.R;
 
-public final class BandwidthIntervalTimespan implements Comparable<BandwidthIntervalTimespan>{
+public final class BandwidthIntervalTimespan implements Comparable<BandwidthIntervalTimespan>,Serializable{
 
-	public enum TimespanType {
+	public enum TimespanType implements Serializable{
 
 		DAYS((byte) 0, R.string.day, R.string.days,"day", "days"), WEEKS((byte) 1, R.string.week, R.string.weeks,"week", "weeks"), MONTHS(
 				(byte) 2, R.string.month, R.string.months,"month", "months"), YEARS((byte) 3, R.string.year, R.string.years,"year", "years");

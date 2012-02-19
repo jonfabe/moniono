@@ -30,6 +30,9 @@ import org.moniono.R;
 import org.moniono.db.DbHelper;
 import org.moniono.db.NodeType;
 import org.moniono.db.NodesDbAdapter;
+import org.moniono.details.AboutActivity;
+import org.moniono.details.HelpActivity;
+import org.moniono.details.LicenseActivity;
 import org.moniono.details.NodeDetailsOverviewActivity;
 import org.moniono.details.NodeDetailsTabsActivity;
 import org.moniono.search.DetailsData;
@@ -49,6 +52,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -179,9 +184,12 @@ public class MonionoActivity extends ListActivity {
 	}
 
 	@Override
-	protected void onActivityResult(@SuppressWarnings("unused") int requestCode, @SuppressWarnings("unused") int resultCode,
+	protected void onActivityResult(
+			@SuppressWarnings("unused") int requestCode,
+			@SuppressWarnings("unused") int resultCode,
 			@SuppressWarnings("unused") Intent intent) {
-		if (this.currentSearchString == null) {
+		if (this.currentSearchString == null
+				|| this.currentSearchString.equals("")) {
 			fillList();
 		} else {
 			search(this.currentSearchString);
@@ -235,8 +243,8 @@ public class MonionoActivity extends ListActivity {
 			processResults();
 		}
 	}
-	
-	public void setDialogMessage(int ressouceId,ProgressDialog dialog){
+
+	public void setDialogMessage(int ressouceId, ProgressDialog dialog) {
 		dialog.setMessage(getResources().getString(ressouceId));
 	}
 
@@ -246,19 +254,18 @@ public class MonionoActivity extends ListActivity {
 		Log.i(LogTags.DIALOG.toString(), "Dialog dismissed.");
 		this.processResults();
 	}
-	
-	public void openNodeView(long id, int code){
-		
+
+	public void openNodeView(long id, int code) {
+
 		String name = null;
 		String hash = null;
 		boolean isRelay = false;
 		switch (code) {
 		case ACTIVITY_NODE_VIEW:
-			
+
 			this.dBase.open();
 			Cursor c = this.dBase.fetchNode(id);
-			name = c.getString(c
-					.getColumnIndexOrThrow(DbHelper.NODES_KEY_NAME));
+			name = c.getString(c.getColumnIndexOrThrow(DbHelper.NODES_KEY_NAME));
 			hash = c.getString(c
 					.getColumnIndexOrThrow(DbHelper.NODES_KEY_FINGERPRINT_HASH));
 			isRelay = NodeType.RELAY.getIdentifier() == c.getInt(c
@@ -269,32 +276,35 @@ public class MonionoActivity extends ListActivity {
 			NodesDataManager man = NodesDataManager.getInstance(this);
 			int identifier = new Long(id).intValue();
 			isRelay = man.isRelay(identifier);
-			if(isRelay){
+			if (isRelay) {
 				name = man.getRelayName(identifier);
 			}
 			hash = man.getFingerprint(identifier);
 		}
-		
-		ProgressDialog progDialog = ProgressDialog.show(
-				MonionoActivity.this, "", getResources().getString(R.string.dialog_loading_details),
+
+		ProgressDialog progDialog = ProgressDialog.show(MonionoActivity.this,
+				"", getResources().getString(R.string.dialog_loading_details),
 				true);
-		
-		new Thread(new NodeDetailsFetchThread(this,hash,name,isRelay,code,progDialog)).start();
+
+		new Thread(new NodeDetailsFetchThread(this, hash, name, isRelay, code,
+				progDialog)).start();
 	}
-	
-	public void handleDataFetch(ProgressDialog dialog,NodeDetailsFetchThread thread){
+
+	public void handleDataFetch(ProgressDialog dialog,
+			NodeDetailsFetchThread thread) {
 		DetailsData data = thread.getData();
 		NodeFlag[] flags = data.getFlags();
 		String[] policy = data.getExitPolicy();
 		Intent i = null;
-		if((flags == null || flags.length == 0) && (policy == null || policy.length == 0)){
+		if ((flags == null || flags.length == 0)
+				&& (policy == null || policy.length == 0)) {
 			i = new Intent(this, NodeDetailsOverviewActivity.class);
-		}else{
+		} else {
 			i = new Intent(this, NodeDetailsTabsActivity.class);
 		}
-		i.putExtra(NODE_NAME.toString(),thread.getName());
-		i.putExtra(NODE_HASH.toString(),thread.getHash());
-		i.putExtra(IS_RELAY.toString(),thread.isRelay());
+		i.putExtra(NODE_NAME.toString(), thread.getName());
+		i.putExtra(NODE_HASH.toString(), thread.getHash());
+		i.putExtra(IS_RELAY.toString(), thread.isRelay());
 		i.putExtra(NODE_DATA.toString(), data);
 		Log.i("Activity", "Dismissing dialog");
 		dialog.dismiss();
@@ -307,8 +317,8 @@ public class MonionoActivity extends ListActivity {
 				this.relaysActive);
 		startManagingCursor(c);
 
-		String[] from = new String[] { CURSOR_FIELD_ONLINE, "name", "fingerprint",
-				CURSOR_FIELD_FAVICON };
+		String[] from = new String[] { CURSOR_FIELD_ONLINE, "name",
+				"fingerprint", CURSOR_FIELD_FAVICON };
 		int[] to = new int[] { R.id.node_type_icon, R.id.main_list_name,
 				R.id.main_list_fingerprint, R.id.bookmark_icon };
 		SimpleCursorAdapter relayResults = new SimpleCursorAdapter(this,
@@ -318,9 +328,10 @@ public class MonionoActivity extends ListActivity {
 				.getFavorites(), this, this.st));
 		this.mResultsList.setAdapter(relayResults);
 		this.mResultsList.setTextFilterEnabled(true);
-		this.mResultsList.setOnItemClickListener(new OnNodeClickListener(this,
-				new NodesDbAdapter(this),
-				MonionoActivity.ACTIVITY_NODE_DETAILS));
+		this.mResultsList
+				.setOnItemClickListener(new OnNodeClickListener(this,
+						new NodesDbAdapter(this),
+						MonionoActivity.ACTIVITY_NODE_DETAILS));
 		this.currentSearchString = this.st.getSearchString();
 
 		this.searchStringLabel.setText(this.getResources().getString(
@@ -331,6 +342,45 @@ public class MonionoActivity extends ListActivity {
 
 	EditText getMSearchString() {
 		return this.mSearchString;
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		boolean result = super.onCreateOptionsMenu(menu);
+		MenuItem licenseMenuItem = menu.add(Menu.NONE, 0, 0, "License");
+		licenseMenuItem.setIcon(R.drawable.license);
+		licenseMenuItem.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+
+			public boolean onMenuItemClick(
+					@SuppressWarnings("unused") MenuItem item) {
+				startActivity(new Intent(MonionoActivity.this,
+						LicenseActivity.class));
+				return true;
+			}
+		});
+		MenuItem infoMenuItem = menu.add(Menu.NONE, 1, 1, "Information");
+		infoMenuItem.setIcon(R.drawable.information);
+		infoMenuItem.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+
+			public boolean onMenuItemClick(
+					@SuppressWarnings("unused") MenuItem item) {
+				startActivity(new Intent(MonionoActivity.this,
+						AboutActivity.class));
+				return true;
+			}
+		});
+		MenuItem helpMenuItem = menu.add(Menu.NONE, 2, 2, "Help");
+		helpMenuItem.setIcon(R.drawable.questionmark);
+		helpMenuItem.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+
+			public boolean onMenuItemClick(
+					@SuppressWarnings("unused") MenuItem item) {
+				startActivity(new Intent(MonionoActivity.this,
+						HelpActivity.class));
+				return true;
+			}
+		});
+		return result;
 	}
 
 }

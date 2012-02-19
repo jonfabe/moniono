@@ -92,14 +92,16 @@ public class DetailsData implements Serializable {
 	private String[] family;
 	private String country;
 	private String poolAssignment;
+	private BandwidthData bandwidthData;
 
 	public DetailsData(String iniNickname, String hash) {
 		this.nickname = iniNickname;
 		this.fingerprint = hash;
 	}
 
-	public DetailsData(JSONObject jsonDetails, String iniNickname)
+	public DetailsData(JSONObject jsonDetails, String iniNickname,BandwidthData iniBData)
 			throws IllegalStateException {
+		this.bandwidthData = iniBData;
 		try {
 			Calendar now = new GregorianCalendar();
 			this.validUntil = getCalendar(VALID_UNITL_KEY, now, jsonDetails);
@@ -222,6 +224,10 @@ public class DetailsData implements Serializable {
 	
 	public String getPoolAssignment(){
 		return this.poolAssignment;
+	}
+
+	public BandwidthData getBandwidthData() {
+		return this.bandwidthData;
 	}
 
 }

@@ -94,7 +94,6 @@ public class BandwidthDataManager extends DataManager {
 					}
 				}
 				if (jsonNode != null) {
-					Log.v("hash", hash);
 					result = new BandwidthData(jsonNode, hash, validUntil);
 					this.knownDetails.put(hash, result);
 				}else{

@@ -15,14 +15,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. 
- -->
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. 
+-->
 <resources>
-    
-    <string name="app_name">mOnionO</string>
 
+    <string name="app_name">mOnionO</string>
     <string name="no_nodes">No nodes configured yet!</string>
-    
     <string name="menu_search">Search</string>
     <string name="menu_favorites">Favorites</string>
     <string name="menu_delete">Delete Node</string>
@@ -40,39 +38,45 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     <string name="platform">Platform</string>
     <string name="dir_address">Dir address</string>
     <string name="pool_assignment">Pool Assignment</string>
-    
     <string name="desc_published">Published</string>
     <string name="desc_valid_after">Valid after</string>
     <string name="desc_valid_until">Valid until</string>
-    
     <string name="restart_timestamp">Restart Time</string>
     <string name="bandwidth">Bandwidth</string>
     <string name="family">Family</string>
-    
     <string name="dialog_loading">Loading search data ...</string>
     <string name="dialog_searching">Searching ...</string>
-    
     <string name="dialog_loading_details">Loading node details ...</string>
-    
     <string name="history_chart_read">Read Access</string>
     <string name="history_chart_write">Write Access</string>
-    
     <string name="day">Day</string>
     <string name="days">Days</string>
-    
     <string name="week">Week</string>
     <string name="weeks">Weeks</string>
-    
     <string name="month">Month</string>
     <string name="months">Months</string>
-    
     <string name="year">Year</string>
     <string name="years">Years</string>
-    
     <string name="history_interval_selection">Select interval</string>
-        <string name="common">Common</string>
+    <string name="common">Common</string>
     <string name="flags">Flags</string>
     <string name="policy">Policy</string>
     <string name="history">History</string>
-	
+    <string name="license">License</string>
+    <string name="info">Info</string>
+    <string name="help">Help</string>
+    <string name="title">mOnionO</string>
+    <string name="subtitle">The mobile Onion Observer</string>
+    <string name="close">Close</string>
+    <string name="about_first">mOnionO is a mobile Onionoo client which can be used to search and display information about Tor nodes. The client is based on the Android platform.</string>
+	<string name="about_second">If you need any further information, please visit the project homepage at http://code.google.com/p/moniono or contact us through email at moniono@gmx.net.</string>
+	<string name="about_third">The Onionoo project defines a protocol to request status information about nodes of the Tor network. This information is published through a web server being part of the Onionoo project. Information is distributed via HTTPS. The Onionoo project itself makes use of information on nodes being directly obtained from The Tor Project.</string>
+	<string name="about_license">Tor is a registered trademark of The Tor Project, Inc., Android is a trademark of Google Inc. </string>
+	<string name="license01">Copyright (C) 2012 Jens Bruhn (moniono@gmx.net)</string>
+	<string name="license02">This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.</string>
+	<string name="license03">This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</string> 
+	<string name="license04">You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. </string>
+	<string name="license05">A copy of the license can also be found at http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</string>
+	<string name="license06">The source code of the software can be found at http://code.google.com/p/moniono</string>
+	<string name="help01">For an instruction on how to use mOnionO, please refer to the project homepage at http://code.google.com/p/moniono. The information on that web site is updated regularly.</string>
 </resources>
