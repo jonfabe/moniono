@@ -37,6 +37,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -107,8 +108,7 @@ public class NodeDetailsHistoryActivity extends Activity {
 		int[] to = new int[] { android.R.id.text1 };
 		SimpleCursorAdapter relayResults = new SimpleCursorAdapter(this,
 				android.R.layout.simple_spinner_item, cursor, from, to);
-		relayResults
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		relayResults.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		Spinner spinner = (Spinner) findViewById(R.id.historySpinner);
 		spinner.setAdapter(relayResults);
 		if (this.chartsList.size() > 0) {

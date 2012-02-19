@@ -103,7 +103,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                     android:layout_height="wrap_content"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/relay_details_nickname"

@@ -38,7 +38,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                 android:id="@+id/historySpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:prompt="@string/history_interval_selection" />
+                android:prompt="@string/history_interval_selection" 
+                style="@style/mOnionOSpinner"/>
 
             <ImageView
                 android:id="@+id/history_chart"

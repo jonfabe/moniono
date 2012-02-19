@@ -64,10 +64,4 @@ public final class BandwidthUtil {
 		return buf.toString();
 	}
 
-//	private static final void fill(long count, StringBuffer buf) {
-//		for (int i = 1000; i > 0 && i >= count; i = i / 10) {
-//			buf.append(ZERO);
-//		}
-//	}
-
 }

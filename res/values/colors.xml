@@ -36,6 +36,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
         
     <color name="bright">#FFFFFF</color>
+    <color name="light">#898989</color>
     <color name="dark">#1A1A1A</color>
     
     

@@ -121,7 +121,7 @@ public class BandwidthData implements Serializable {
 				 * <series_2>,...,<series_m>
 				 */
 				NameValuePair chco = new BasicNameValuePair("chco",
-						"FF0000,00FF00");
+						"4E6A20,8B61AB");
 				nameValuePairs.add(chco);
 
 				/*
@@ -143,7 +143,7 @@ public class BandwidthData implements Serializable {
 				 * Line styles: chls=
 				 * <line_1_thickness>,<opt_dash_length>,<opt_space_length>|...
 				 */
-				NameValuePair chls = new BasicNameValuePair("chls", "1|1");
+				NameValuePair chls = new BasicNameValuePair("chls", "2|2");
 				nameValuePairs.add(chls);
 
 				/*

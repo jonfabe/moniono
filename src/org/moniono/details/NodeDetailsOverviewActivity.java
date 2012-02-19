@@ -251,10 +251,12 @@ public class NodeDetailsOverviewActivity extends Activity {
 			this.nicknameEdit.setText(relayData.getNickname());
 			this.nicknameEdit.setVisibility(View.VISIBLE);
 			this.mNicknameView.setVisibility(View.GONE);
+			this.editIcon.setImageResource(R.drawable.edit_active);
 		}else{
 			this.mNicknameView.setText(relayData.getNickname());
 			this.nicknameEdit.setVisibility(View.GONE);
 			this.mNicknameView.setVisibility(View.VISIBLE);
+			this.editIcon.setImageResource(R.drawable.edit);
 		}
 		HorizontalScrollView hScrollView = (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);
 		hScrollView.fullScroll(ScrollView.FOCUS_LEFT);

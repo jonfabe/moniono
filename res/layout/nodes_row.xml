@@ -22,7 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="horizontal" 
-        style="@style/mOnionOStyle.Section">
+        style="@style/mOnionOStyle.Section" android:background="@drawable/background_color_selector">
         
     <ImageView
             android:id="@+id/node_type_icon"

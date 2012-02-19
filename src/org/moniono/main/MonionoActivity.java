@@ -33,9 +33,9 @@ import org.moniono.db.NodesDbAdapter;
 import org.moniono.details.NodeDetailsOverviewActivity;
 import org.moniono.details.NodeDetailsTabsActivity;
 import org.moniono.search.DetailsData;
+import org.moniono.search.NodeFlag;
 import org.moniono.search.NodesDataManager;
 import org.moniono.search.NodesDataManagerWorker;
-import org.moniono.search.NodeFlag;
 import org.moniono.search.SearchThread;
 import org.moniono.util.LogTags;
 import org.moniono.view.binder.FavoriteListViewBinder;
@@ -223,10 +223,10 @@ public class MonionoActivity extends ListActivity {
 		if (this.currentSearchString == null
 				|| !searchString.equals(this.currentSearchString)) {
 			Log.i(LogTags.SEARCH.toString(), "Searching for " + searchString);
-			ProgressDialog dialog = ProgressDialog.show(
-					MonionoActivity.this, "", getResources().getString(R.string.dialog_loading),
-					true);
-			Log.i(LogTags.DIALOG.toString(), "Show dialog.");
+			ProgressDialog dialog = new ProgressDialog(this);
+			dialog.setMessage(getResources().getString(R.string.dialog_loading));
+			dialog.setIndeterminate(true);
+			dialog.show();
 			SearchThread t = new SearchThread(this, this.dBase, searchString,
 					this.bridgesActive, this.relaysActive, dialog);
 			this.st = t;

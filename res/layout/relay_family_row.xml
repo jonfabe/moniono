@@ -21,7 +21,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:orientation="horizontal" >
+        android:orientation="horizontal" 
+        android:background="@color/bright">
     <TextView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/relay_details_family_entry"
