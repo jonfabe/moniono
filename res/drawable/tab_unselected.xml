@@ -21,20 +21,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <!-- <item android:top="63dp">
-<shape android:shape="rectangle" >
-
-            <solid android:color="#898989" />
-        </shape></item>
-
-    <item
-        android:bottom="1px"
-        android:top="63dp">
-<shape android:shape="rectangle" >
-
-            <solid android:color="@color/background" />
-        </shape></item> -->
-
     <item
         android:left="2px"
         android:right="2px">
@@ -48,12 +34,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
             <gradient
                 android:angle="90"
-                android:endColor="#aaa"
-                android:startColor="#ddd" />
+                android:endColor="@color/unselected"
+                android:startColor="@color/unselected_gradient" />
 
                  <stroke
                 android:width="1px"
-                android:color="#898989" />
+                android:color="@color/dark" />
         </shape></item>
 
 </layer-list>

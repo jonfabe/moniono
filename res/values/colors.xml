@@ -19,13 +19,24 @@ with this program; if not, write to the Free Software Foundation, Inc.,
  -->
 <resources>
 
-    <color name="offline">#ffff0000</color>
-    <color name="online">#ff00ff00</color>
+    <color name="offline">#FF0000</color>
+    <color name="online">#00FF00</color>
     
-    <color name="background">#ffffff</color>
-    <color name="white_text">#ffffff</color>
-    <color name="normalText">#000000</color>
-    <color name="notify">#8b61ab</color>
+    <color name="highlight">#A07320</color>
+    
+    <color name="unselected">#E8E8CE</color>
+    <color name="unselected_gradient">#FCFFF4</color>
+    
+    
+    <color name="headline">#4E6A20</color>
+    <color name="headline_gradient">#B0C889</color>
+    
+    <color name="important">#8B61AB</color>
+    <color name="important_gradient">#C4AFD4</color>
+
+        
+    <color name="bright">#FFFFFF</color>
+    <color name="dark">#1A1A1A</color>
     
     
 </resources>
