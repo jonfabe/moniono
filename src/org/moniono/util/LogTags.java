@@ -68,5 +68,9 @@ public enum LogTags {
 	 * Logging in the context of interface contracts. This tag is mostly used in
 	 * cases where a contract is violated.
 	 */
-	CONTRACT;
+	CONTRACT,
+	/**
+	 * Used for temporary logging.
+	 */
+	TEMPO;
 }

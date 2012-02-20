@@ -27,7 +27,6 @@ import java.util.Set;
 
 import org.moniono.R;
 import org.moniono.search.BandwidthData;
-import org.moniono.search.BandwidthDataManager;
 import org.moniono.search.BandwidthIntervalTimespan;
 import org.moniono.search.DetailsData;
 import org.moniono.search.NodeFlag;
@@ -129,8 +128,7 @@ public class NodeDetailsTabsActivity extends TabActivity {
 			tabHost.addTab(policySpec);
 		}
 
-		BandwidthDataManager bManager = BandwidthDataManager.getInstance(this);
-		BandwidthData bData = bManager.getData(data.getFingerprint());
+		BandwidthData bData = data.getBandwidthData();
 		Set<BandwidthIntervalTimespan> intervals = bData.getTimespans();
 		if (intervals != null && intervals.size() > 0) {
 
@@ -164,7 +162,6 @@ public class NodeDetailsTabsActivity extends TabActivity {
 			tabLayout.setBackgroundDrawable(res
 					.getDrawable(R.drawable.tab_selector));
 		}
-
 	}
 
 }

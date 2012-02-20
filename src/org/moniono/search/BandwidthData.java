@@ -260,6 +260,7 @@ public class BandwidthData implements Serializable {
 				httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
 				// Execute HTTP Post Request
+				Log.v(LogTags.NETWORK.toString(), "Requesting bandwidth chart");
 				HttpResponse response = httpclient.execute(httppost);
 
 				InputStream is = response.getEntity().getContent();

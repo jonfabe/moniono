@@ -54,6 +54,7 @@ public abstract class DataManager {
 		HttpGet request = new HttpGet(url);
 		HttpResponse response = null;
 		try {
+			Log.v(LogTags.NETWORK.toString(), "Requesting URL: "+url);
 			response = client.execute(request);
 		} catch (ClientProtocolException e) {
 			Log.w(LogTags.NETWORK.toString(), "Error during network access.",e);
