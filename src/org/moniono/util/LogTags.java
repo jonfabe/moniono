@@ -72,5 +72,9 @@ public enum LogTags {
 	/**
 	 * Used for temporary logging.
 	 */
-	TEMPO;
+	TEMP,
+	/**
+	 * Logging in the context data refresh.
+	 */
+	DATA_REFRESH;
 }

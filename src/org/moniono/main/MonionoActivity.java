@@ -38,7 +38,7 @@ import org.moniono.details.NodeDetailsTabsActivity;
 import org.moniono.search.DetailsData;
 import org.moniono.search.NodeFlag;
 import org.moniono.search.NodesDataManager;
-import org.moniono.search.NodesDataManagerWorker;
+import org.moniono.search.NodesDataRefreshThread;
 import org.moniono.search.SearchThread;
 import org.moniono.util.LogTags;
 import org.moniono.view.binder.FavoriteListViewBinder;
@@ -125,8 +125,9 @@ public class MonionoActivity extends ListActivity {
 		this.mRelayMenuEntry = (ImageView) findViewById(R.id.relay_icon_2);
 		RelaysClickListener rcl = new RelaysClickListener(this);
 		this.mRelayMenuEntry.setOnClickListener(rcl);
-
-		new Thread(new NodesDataManagerWorker(this)).start();
+		if(!NodesDataManager.hasManager()){
+			new NodesDataRefreshThread(this).start();
+		}
 	}
 
 	private void switchRelayMenuEntryWithoutRefresh() {

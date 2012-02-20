@@ -21,10 +21,8 @@ package org.moniono.search;
 import static org.moniono.util.CommonConstants.NODES_LIST_URL;
 
 import java.io.Serializable;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -47,6 +45,9 @@ public class NodesDataManager extends DataManager implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -7095158355420917185L;
+	
+	private static int MIN_MINUTES_REFRESH_DELAY = 15;
+	private static int MINUTES_PUBLICATION_REFRESH_DELAY = 60;
 
 	private static NodesDataManager manager;
 	
@@ -68,7 +69,7 @@ public class NodesDataManager extends DataManager implements Serializable {
 
 	private static final String[] EMPTY_STRING_ARRAY = new String[0];
 
-	private long refreshTime;
+	private Calendar refreshTime;
 	private String[] relayNames;
 	private String[] relayLowerNames;
 	private String[] relayFingerprintHashes;
@@ -83,7 +84,7 @@ public class NodesDataManager extends DataManager implements Serializable {
 	public synchronized static void refreshData(Context iniCtx) {
 		NodesDataManager newManager = new NodesDataManager(iniCtx);
 		manager = newManager;
-		Log.i("JSON", "Data refreshed");
+		Log.i(LogTags.JSON_PROCESSING.toString(), "Data refreshed");
 	}
 
 	private NodesDataManager(Context iniCtx) {
@@ -94,8 +95,18 @@ public class NodesDataManager extends DataManager implements Serializable {
 	public synchronized static NodesDataManager getInstance(Context iniCtx) {
 		if (manager == null) {
 			manager = new NodesDataManager(iniCtx);
+		}else{
+			Calendar now = new GregorianCalendar();
+			Log.v(LogTags.TEMP.toString(), "Now "+now.getTime().toString()+" => "+manager.refreshTime.getTime().toString()+" => "+manager.refreshTime.compareTo(now));
+			if(manager.refreshTime.compareTo(now) < 0){
+				new NodesDataRefreshThread(iniCtx).start();
+			}
 		}
 		return manager;
+	}
+	
+	public synchronized static boolean hasManager(){
+		return manager != null;
 	}
 
 	private void fillSearchDatabase() {
@@ -175,27 +186,10 @@ public class NodesDataManager extends DataManager implements Serializable {
 			GregorianCalendar relaysPublishedCal = fromString(relaysPublished);
 			GregorianCalendar bridgesPublishedCal = fromString(bridgesPublished);
 			GregorianCalendar earliestPublishedCal = relaysPublishedCal.before(bridgesPublishedCal) ? relaysPublishedCal : bridgesPublishedCal;
-			earliestPublishedCal.add(Calendar.HOUR_OF_DAY, 2);
-
-			GregorianCalendar now = new GregorianCalendar();
-			this.refreshTime = earliestPublishedCal.getTimeInMillis()
-					- now.getTimeInMillis();
-			if (refreshTime < 0) {
-				refreshTime = 0;
-			}
-			refreshTime += 5 * 60 * 1000;
-			new Thread(new Runnable() {
-
-				public void run() {
-					try {
-						Thread.sleep(refreshTime);
-					} catch (InterruptedException e) {
-						Log.i("THREAD", "Interrupted", e);
-					}
-					refreshData(NodesDataManager.this.ctx);
-				}
-
-			}).start();
+			earliestPublishedCal.add(Calendar.MINUTE, MINUTES_PUBLICATION_REFRESH_DELAY);
+			GregorianCalendar defaultRefreshTimestamp = new GregorianCalendar();
+			defaultRefreshTimestamp.add(Calendar.MINUTE, MIN_MINUTES_REFRESH_DELAY);
+			this.refreshTime = earliestPublishedCal.compareTo(defaultRefreshTimestamp) >= 0 ? earliestPublishedCal : defaultRefreshTimestamp; 
 		} catch (JSONException e) {
 			Log.e(LogTags.JSON_PROCESSING.toString(), "Error procssing JSON data.",e);
 		}
@@ -358,5 +352,5 @@ public class NodesDataManager extends DataManager implements Serializable {
 		}
 		return this.relayNames.length + this.bridgeFingerprintHashes.length;
 	}
-
+	
 }

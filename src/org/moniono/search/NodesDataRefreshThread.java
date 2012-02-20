@@ -16,20 +16,29 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 package org.moniono.search;
 
+import org.moniono.util.LogTags;
+
 import android.content.Context;
+import android.util.Log;
 
-public class NodesDataManagerWorker implements Runnable {
-
+/**
+ *
+ *
+ * @author Jens Bruhn
+ * @version 0.1 - alpha
+ */
+public class NodesDataRefreshThread extends Thread{
+	
 	private Context ctx;
-
-	public NodesDataManagerWorker(Context iniCtx) {
+	
+	public NodesDataRefreshThread(Context iniCtx){
 		this.ctx = iniCtx;
 	}
-
+	
 	public void run() {
+		Log.v(LogTags.DATA_REFRESH.toString(), "Refreshing search data.");
 		NodesDataManager.refreshData(this.ctx);
 	}
 

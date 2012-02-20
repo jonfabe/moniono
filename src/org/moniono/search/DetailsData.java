@@ -22,7 +22,6 @@ package org.moniono.search;
 
 import static org.moniono.util.JSONUtil.getBoolean;
 import static org.moniono.util.JSONUtil.getCalendar;
-import static org.moniono.util.JSONUtil.getInteger;
 import static org.moniono.util.JSONUtil.getLong;
 import static org.moniono.util.JSONUtil.getString;
 import static org.moniono.util.JSONUtil.getStringArray;
@@ -30,15 +29,12 @@ import static org.moniono.util.JSONUtil.getStringArray;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.moniono.search.BandwidthIntervalTimespan.TimespanType;
 import org.moniono.util.BandwidthUtil;
+import org.moniono.util.LogTags;
 
 import android.util.Log;
 
@@ -103,8 +99,10 @@ public class DetailsData implements Serializable {
 			throws IllegalStateException {
 		this.bandwidthData = iniBData;
 		try {
-			Calendar now = new GregorianCalendar();
-			this.validUntil = getCalendar(VALID_UNITL_KEY, now, jsonDetails);
+			Calendar validDefault = new GregorianCalendar();
+			validDefault.add(Calendar.MINUTE, 30);
+			this.validUntil = getCalendar(VALID_UNITL_KEY, validDefault, jsonDetails);
+			this.validUntil = this.isValid() ? this.validUntil : validDefault; 
 			this.originalNickname = getString(NICKNAME_KEY, EMPTY_STRING,
 					jsonDetails);
 			if (iniNickname == null) {
@@ -198,7 +196,8 @@ public class DetailsData implements Serializable {
 
 	public boolean isValid() {
 		Calendar now = new GregorianCalendar();
-		return this.validUntil != null && now.compareTo(this.validUntil) > 0;
+		Log.v(LogTags.TEMP.toString(),"Now "+now.getTime().toString()+" vs Then "+this.validUntil.getTime().toString());
+		return this.validUntil != null && now.compareTo(this.validUntil) < 0;
 	}
 
 	public String getOriginalNickname() {

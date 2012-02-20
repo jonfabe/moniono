@@ -28,8 +28,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import org.moniono.util.LogTags;
 
 import android.content.Context;
+import android.util.Log;
 
 public class DetailsDataManager extends DataManager {
 
@@ -58,6 +60,11 @@ public class DetailsDataManager extends DataManager {
 
 	public DetailsData getData(String name, String hash,BandwidthData bData) {
 		DetailsData result = this.knownDetails.get(hash);
+		if (result == null){
+			Log.v(LogTags.TEMP.toString(),"No result found!");
+		}else{
+			Log.v(LogTags.TEMP.toString(),"Result is valid: "+result.isValid());
+		}
 		if (result == null || !result.isValid()) {
 			JSONObject json = this.getBaseObject(hash);
 			if (json != null) {
@@ -66,6 +73,15 @@ public class DetailsDataManager extends DataManager {
 			} else {
 				result = new DetailsData(name, hash);
 			}
+		}
+		result.setNickname(name);
+		return result;
+	}
+	
+	public DetailsData getData(String name, String hash) {
+		DetailsData result = this.knownDetails.get(hash);
+		if (result == null || !result.isValid()) {
+			return null;
 		}
 		result.setNickname(name);
 		return result;

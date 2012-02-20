@@ -77,12 +77,9 @@ public class NodeDetailsHistoryActivity extends Activity {
 		setContentView(R.layout.history);
 		Bundle extras = getIntent().getExtras();
 
-		String hash = extras.getString(NODE_HASH.toString());
 		DetailsData details = (DetailsData) extras.get(NODE_DATA.toString());
 
 		BandwidthData bData = details.getBandwidthData(); 
-//				BandwidthDataManager.getInstance(this).getData(
-//				hash);
 		Set<BandwidthIntervalTimespan> timespans = bData.getTimespans();
 
 		MatrixCursor cursor = new MatrixCursor(new String[] { "_id", "entry" },
