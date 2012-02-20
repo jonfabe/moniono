@@ -76,7 +76,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/license01"
-                android:textAppearance="?android:attr/textAppearanceMedium" 
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:autoLink="all" 
                 android:paddingBottom="10px"/>
             
             <TextView
@@ -85,6 +86,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                 android:layout_height="wrap_content"
                 android:text="@string/license02"
                 android:textAppearance="?android:attr/textAppearanceMedium" 
+                android:autoLink="all"
                 android:paddingBottom="10px"/>
 
             <TextView
@@ -93,6 +95,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                 android:layout_height="wrap_content"
                 android:text="@string/license03"
                 android:textAppearance="?android:attr/textAppearanceMedium" 
+                android:autoLink="all"
                 android:paddingBottom="10px"/>
 
             <TextView
@@ -101,6 +104,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                 android:layout_height="wrap_content"
                 android:text="@string/license04" 
                 android:textAppearance="?android:attr/textAppearanceMedium" 
+                android:autoLink="all"
                 android:paddingBottom="10px"/>
             
             <TextView
@@ -115,6 +119,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/license06" 
+                android:autoLink="all"
                 android:paddingBottom="10px"/>
 
             <LinearLayout

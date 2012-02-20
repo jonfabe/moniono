@@ -76,6 +76,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/about_first"
+                android:autoLink="all"
                 android:textAppearance="?android:attr/textAppearanceMedium" 
                 android:paddingBottom="10px"/>
             
@@ -84,6 +85,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/about_second"
+                android:autoLink="all"
                 android:textAppearance="?android:attr/textAppearanceMedium" 
                 android:paddingBottom="10px"/>
 
@@ -92,6 +94,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/about_third"
+                android:autoLink="all"
                 android:textAppearance="?android:attr/textAppearanceMedium" 
                 android:paddingBottom="10px"/>
 
@@ -100,6 +103,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/about_license" 
+                android:autoLink="all"
                 android:paddingBottom="10px"/>
 
             <LinearLayout

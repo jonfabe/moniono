@@ -76,6 +76,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/help01"
+                android:autoLink="all"
                 android:textAppearance="?android:attr/textAppearanceMedium" 
                 android:paddingBottom="10px"/>
             
