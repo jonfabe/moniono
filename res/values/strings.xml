@@ -68,6 +68,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     <string name="title">mOnionO</string>
     <string name="subtitle">The mobile Onion Observer</string>
     <string name="close">Close</string>
+    <string name="reject">Reject</string>
+    <string name="accept">Accept</string>
     <string name="about_first">mOnionO is a mobile Onionoo client which can be used to search and display information about Tor nodes. The client is based on the Android platform.</string>
 	<string name="about_second">If you need any further information, please visit the project homepage at http://code.google.com/p/moniono or contact us through email at moniono@gmx.net.</string>
 	<string name="about_third">The Onionoo project defines a protocol to request status information about nodes of the Tor network. This information is published through a web server being part of the Onionoo project. Information is distributed via HTTPS. The Onionoo project itself makes use of information on nodes being directly obtained from The Tor Project.</string>
@@ -78,5 +80,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	<string name="license04">You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. </string>
 	<string name="license05">A copy of the license can also be found at http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</string>
 	<string name="license06">The source code of the software can be found at http://code.google.com/p/moniono</string>
+	<string name="licenseAll">Copyright (C) 2012 Jens Bruhn (moniono@gmx.net) \n\n This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.\n This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.\n\n A copy of the license can also be found at http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n\n The source code of the software can be found at http://code.google.com/p/moniono</string>
 	<string name="help01">For an instruction on how to use mOnionO, please refer to the project homepage at http://code.google.com/p/moniono. The information on that web site is updated regularly.</string>
 </resources>

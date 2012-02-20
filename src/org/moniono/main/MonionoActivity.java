@@ -44,12 +44,20 @@ import org.moniono.util.LogTags;
 import org.moniono.view.binder.FavoriteListViewBinder;
 import org.moniono.view.binder.NodeListViewBinder;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -93,6 +101,7 @@ public class MonionoActivity extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		checkLicense();
 		setContentView(R.layout.nodes_list);
 		this.dBase = new NodesDbAdapter(this);
 		Intent intent = getIntent();
@@ -125,7 +134,7 @@ public class MonionoActivity extends ListActivity {
 		this.mRelayMenuEntry = (ImageView) findViewById(R.id.relay_icon_2);
 		RelaysClickListener rcl = new RelaysClickListener(this);
 		this.mRelayMenuEntry.setOnClickListener(rcl);
-		if(!NodesDataManager.hasManager()){
+		if (!NodesDataManager.hasManager()) {
 			new NodesDataRefreshThread(this).start();
 		}
 	}
@@ -350,15 +359,16 @@ public class MonionoActivity extends ListActivity {
 		boolean result = super.onCreateOptionsMenu(menu);
 		MenuItem licenseMenuItem = menu.add(Menu.NONE, 0, 0, "License");
 		licenseMenuItem.setIcon(R.drawable.license);
-		licenseMenuItem.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+		licenseMenuItem
+				.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 
-			public boolean onMenuItemClick(
-					@SuppressWarnings("unused") MenuItem item) {
-				startActivity(new Intent(MonionoActivity.this,
-						LicenseActivity.class));
-				return true;
-			}
-		});
+					public boolean onMenuItemClick(
+							@SuppressWarnings("unused") MenuItem item) {
+						startActivity(new Intent(MonionoActivity.this,
+								LicenseActivity.class));
+						return true;
+					}
+				});
 		MenuItem infoMenuItem = menu.add(Menu.NONE, 1, 1, "Information");
 		infoMenuItem.setIcon(R.drawable.information);
 		infoMenuItem.setOnMenuItemClickListener(new OnMenuItemClickListener() {
@@ -382,6 +392,65 @@ public class MonionoActivity extends ListActivity {
 			}
 		});
 		return result;
+	}
+
+	private void checkLicense() {
+		Log.v(LogTags.TEMP.toString(), "License check started.");
+		try {
+			final PackageInfo packageInfo = this.getPackageManager()
+					.getPackageInfo(this.getPackageName(),
+							PackageManager.GET_ACTIVITIES);
+
+			final SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+			final long lastVersionCode = prefs.getLong(
+					"version_license_agreed", -1);
+			if (packageInfo.versionCode != lastVersionCode) {
+
+				final String title = this.getString(R.string.app_name) + " v"
+						+ packageInfo.versionName;
+
+				final String message = this.getString(R.string.licenseAll);
+
+				AlertDialog.Builder builder = new AlertDialog.Builder(this)
+						.setTitle(title)
+						.setMessage(message);
+				
+				builder.setPositiveButton(R.string.accept,
+								new Dialog.OnClickListener() {
+
+									public void onClick(
+											DialogInterface dialogInterface,
+											int i) {
+										SharedPreferences.Editor editor = prefs
+												.edit();
+										editor.putLong(
+												"version_license_agreed",
+												packageInfo.versionCode);
+										editor.commit();
+										dialogInterface.dismiss();
+									}
+								});
+				builder.setNegativeButton(R.string.reject,
+						new Dialog.OnClickListener() {
+
+					public void onClick(
+							DialogInterface dialogInterface,
+							int i) {
+						SharedPreferences.Editor editor = prefs
+								.edit();
+						editor.putLong(
+								"version_license_agreed",-1);
+						editor.commit();
+						MonionoActivity.this.finish();
+					}
+				});
+				builder.setCancelable(false);
+				builder.create().show();
+			}
+		} catch (NameNotFoundException e) {
+			Log.e(LogTags.TEMP.toString(), "Exception in checker.", e);
+			MonionoActivity.this.finish();
+		}
 	}
 
 }

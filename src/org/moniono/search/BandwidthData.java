@@ -94,7 +94,11 @@ public class BandwidthData implements Serializable {
 			try {
 				/* Preparation of data structure for parameters. */
 				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(
-						13);
+						14);
+				
+				/* chf=bg,s,FFFFFF */
+				NameValuePair chf = new BasicNameValuePair("chf", "bg,s,FFFFFF");
+				nameValuePairs.add(chf);
 
 				/* Visible axes: chxt=<axis_1>,... */
 				NameValuePair chxt = new BasicNameValuePair("chxt", "x,y");
