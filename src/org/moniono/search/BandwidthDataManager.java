@@ -65,55 +65,71 @@ public class BandwidthDataManager extends DataManager {
 	public BandwidthData getData(String hash) {
 		BandwidthData result = this.knownDetails.get(hash);
 		if (result == null || !result.isValid()) {
-			JSONTokener tokener = getJson(NODE_BANDWIDTH_BASE_URL + hash.toUpperCase());
-			JSONObject json = null;
-			try {
-				json = (JSONObject) tokener.nextValue();
-				Calendar validUntil = new GregorianCalendar();
-				Log.v(LogTags.JSON_PROCESSING.toString(),"Fresh until: "+validUntil);
-				JSONObject jsonNode = null;
-				if (json.has(RESULT_RELAYS)) {
-					JSONArray relayResults = json.getJSONArray(RESULT_RELAYS);
-					if (relayResults.length() > 0) {
-						jsonNode = relayResults.getJSONObject(0);
-						validUntil = JSONUtil.getCalendar(RELAYS_PUBLISHED_KEY,
-								new GregorianCalendar(), json);
-						validUntil.add(Calendar.HOUR_OF_DAY, 2);
+			this.knownDetails.remove(hash);
+			JSONTokener tokener = getJson(NODE_BANDWIDTH_BASE_URL
+					+ hash.toUpperCase());
+			if (tokener != null) {
+				JSONObject json = null;
+				try {
+					json = (JSONObject) tokener.nextValue();
+					Calendar validUntil = new GregorianCalendar();
+					Log.v(LogTags.JSON_PROCESSING.toString(), "Fresh until: "
+							+ validUntil);
+					JSONObject jsonNode = null;
+					if (json.has(RESULT_RELAYS)) {
+						JSONArray relayResults = json
+								.getJSONArray(RESULT_RELAYS);
+						if (relayResults.length() > 0) {
+							jsonNode = relayResults.getJSONObject(0);
+							validUntil = JSONUtil.getCalendar(
+									RELAYS_PUBLISHED_KEY,
+									new GregorianCalendar(), json);
+							validUntil.add(Calendar.HOUR_OF_DAY, 2);
+						}
 					}
-				}
-				if (jsonNode == null && json.has(RESULT_BRIDGES)) {
-					Log.w(LogTags.HISTORY.toString(), "Bridges results given");
-					JSONArray bridgeResults = json.getJSONArray(RESULT_BRIDGES);
-					if (bridgeResults.length() > 0) {
-						jsonNode = bridgeResults.getJSONObject(0);
-						validUntil = JSONUtil.getCalendar(BRIDGES_PUBLISHED_KEY,
-								new GregorianCalendar(), json);
-						validUntil.add(Calendar.HOUR_OF_DAY, 2);
-					}else{
-						Log.w(LogTags.HISTORY.toString(), "Empty bridges result set.");
+					if (jsonNode == null && json.has(RESULT_BRIDGES)) {
+						Log.w(LogTags.HISTORY.toString(),
+								"Bridges results given");
+						JSONArray bridgeResults = json
+								.getJSONArray(RESULT_BRIDGES);
+						if (bridgeResults.length() > 0) {
+							jsonNode = bridgeResults.getJSONObject(0);
+							validUntil = JSONUtil.getCalendar(
+									BRIDGES_PUBLISHED_KEY,
+									new GregorianCalendar(), json);
+							validUntil.add(Calendar.HOUR_OF_DAY, 2);
+						} else {
+							Log.w(LogTags.HISTORY.toString(),
+									"Empty bridges result set.");
+						}
 					}
+					if (jsonNode != null) {
+						result = new BandwidthData(jsonNode, hash, validUntil);
+						this.knownDetails.put(hash, result);
+					} else {
+						Log.w(LogTags.HISTORY.toString(),
+								"No element for history found with key: "
+										+ hash);
+					}
+				} catch (JSONException e) {
+					Log.w(LogTags.JSON_PROCESSING.toString(),
+							"Processing details data.", e);
+					return null;
 				}
-				if (jsonNode != null) {
-					result = new BandwidthData(jsonNode, hash, validUntil);
-					this.knownDetails.put(hash, result);
-				}else{
-					Log.w(LogTags.HISTORY.toString(), "No element for history found with key: "+hash);
-				}
-			} catch (JSONException e) {
-				Log.w(LogTags.JSON_PROCESSING.toString(),"Processing details data.",e);
-				return null;
 			}
 		}
 		return result;
 	}
 
 	private JSONObject getBaseObject(String hashValue) {
-		JSONTokener tokener = getJson(NODE_BANDWIDTH_BASE_URL + hashValue.toUpperCase());
+		JSONTokener tokener = getJson(NODE_BANDWIDTH_BASE_URL
+				+ hashValue.toUpperCase());
 		JSONObject json = null;
 		try {
 			json = (JSONObject) tokener.nextValue();
 		} catch (JSONException e) {
-			Log.e(LogTags.JSON_PROCESSING.toString(), "Error processingd bandwidth data.",e);
+			Log.e(LogTags.JSON_PROCESSING.toString(),
+					"Error processingd bandwidth data.", e);
 			return null;
 		}
 		try {

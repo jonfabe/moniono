@@ -31,13 +31,24 @@ import android.util.Log;
  */
 public class NodesDataRefreshThread extends Thread{
 	
-	private Context ctx;
+	private static final long START_DELAY = 30 * 1000;
 	
-	public NodesDataRefreshThread(Context iniCtx){
+	private Context ctx;
+	private boolean startDelayed;
+	
+	public NodesDataRefreshThread(Context iniCtx, boolean delayed){
 		this.ctx = iniCtx;
+		this.startDelayed = delayed;
 	}
 	
 	public void run() {
+		if(this.startDelayed){
+			try {
+				Thread.currentThread().sleep(START_DELAY);
+			} catch (InterruptedException e) {
+				// Nothing to do
+			}
+		}
 		Log.v(LogTags.DATA_REFRESH.toString(), "Refreshing search data.");
 		NodesDataManager.refreshData(this.ctx);
 	}

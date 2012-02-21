@@ -50,12 +50,13 @@ public class NodeDetailsFetchThread implements Runnable {
 	}
 
 	public void run() {
-		this.data = DetailsDataManager.getInstance(this.ctx).getData(
-				this.name, this.hash);
-		if(this.data == null){
-			BandwidthData bdata = BandwidthDataManager.getInstance(this.ctx).getData(hash);
+		this.data = DetailsDataManager.getInstance(this.ctx).getData(this.name,
+				this.hash);
+		if (this.data == null) {
+			BandwidthData bdata = BandwidthDataManager.getInstance(this.ctx)
+					.getData(hash);
 			this.data = DetailsDataManager.getInstance(this.ctx).getData(
-					this.name, this.hash,bdata);
+					this.name, this.hash, bdata);
 		}
 		this.handler.sendEmptyMessage(0);
 	}

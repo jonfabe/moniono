@@ -196,7 +196,6 @@ public class DetailsData implements Serializable {
 
 	public boolean isValid() {
 		Calendar now = new GregorianCalendar();
-		Log.v(LogTags.TEMP.toString(),"Now "+now.getTime().toString()+" vs Then "+this.validUntil.getTime().toString());
 		return this.validUntil != null && now.compareTo(this.validUntil) < 0;
 	}
 

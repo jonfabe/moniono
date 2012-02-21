@@ -75,7 +75,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                 android:id="@+id/license_content_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/license01"
+                android:text="@string/copyright"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:autoLink="all" 
                 android:paddingBottom="10px"/>
@@ -84,7 +84,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                 android:id="@+id/license_content_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/license02"
+                android:text="@string/gpl"
                 android:textAppearance="?android:attr/textAppearanceMedium" 
                 android:autoLink="all"
                 android:paddingBottom="10px"/>
@@ -93,8 +93,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                 android:id="@+id/license_content_3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/license03"
-                android:textAppearance="?android:attr/textAppearanceMedium" 
+                android:text="@string/gpl_location"
                 android:autoLink="all"
                 android:paddingBottom="10px"/>
 
@@ -102,23 +101,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                 android:id="@+id/license_content_4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/license04" 
-                android:textAppearance="?android:attr/textAppearanceMedium" 
-                android:autoLink="all"
-                android:paddingBottom="10px"/>
-            
-            <TextView
-                android:id="@+id/license_content_5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/license05" 
-                android:paddingBottom="10px"/>
-            
-            <TextView
-                android:id="@+id/license_content_6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/license06" 
+                android:text="@string/source_code_location" 
                 android:autoLink="all"
                 android:paddingBottom="10px"/>
 

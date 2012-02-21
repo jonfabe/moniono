@@ -58,17 +58,18 @@ public class DetailsDataManager extends DataManager {
 		super(iniCtx);
 	}
 
-	public DetailsData getData(String name, String hash,BandwidthData bData) {
+	public DetailsData getData(String name, String hash, BandwidthData bData) {
 		DetailsData result = this.knownDetails.get(hash);
-		if (result == null){
-			Log.v(LogTags.TEMP.toString(),"No result found!");
-		}else{
-			Log.v(LogTags.TEMP.toString(),"Result is valid: "+result.isValid());
+		if (result == null) {
+			Log.v(LogTags.TEMP.toString(), "No result found!");
+		} else {
+			Log.v(LogTags.TEMP.toString(),
+					"Result is valid: " + result.isValid());
 		}
 		if (result == null || !result.isValid()) {
 			JSONObject json = this.getBaseObject(hash);
 			if (json != null) {
-				result = new DetailsData(json, name,bData);
+				result = new DetailsData(json, name, bData);
 				this.knownDetails.put(hash, result);
 			} else {
 				result = new DetailsData(name, hash);
@@ -77,7 +78,7 @@ public class DetailsDataManager extends DataManager {
 		result.setNickname(name);
 		return result;
 	}
-	
+
 	public DetailsData getData(String name, String hash) {
 		DetailsData result = this.knownDetails.get(hash);
 		if (result == null || !result.isValid()) {
@@ -89,19 +90,22 @@ public class DetailsDataManager extends DataManager {
 
 	private JSONObject getBaseObject(String hashValue) {
 
-		JSONTokener tokener = getJson(NODE_DETAILS_BASE_URL + hashValue.toUpperCase());
-		try {
-			JSONObject json = (JSONObject) tokener.nextValue();
-			JSONArray relayResults = json.getJSONArray(RESULT_RELAYS);
-			if (relayResults.length() > 0) {
-				return relayResults.getJSONObject(0);
+		JSONTokener tokener = getJson(NODE_DETAILS_BASE_URL
+				+ hashValue.toUpperCase());
+		if (tokener != null) {
+			try {
+				JSONObject json = (JSONObject) tokener.nextValue();
+				JSONArray relayResults = json.getJSONArray(RESULT_RELAYS);
+				if (relayResults.length() > 0) {
+					return relayResults.getJSONObject(0);
+				}
+				JSONArray bridgeResults = json.getJSONArray(RESULT_BRIDGES);
+				if (bridgeResults.length() > 0) {
+					return bridgeResults.getJSONObject(0);
+				}
+			} catch (JSONException e) {
+				return null;
 			}
-			JSONArray bridgeResults = json.getJSONArray(RESULT_BRIDGES);
-			if (bridgeResults.length() > 0) {
-				return bridgeResults.getJSONObject(0);
-			}
-		} catch (JSONException e) {
-			return null;
 		}
 		return null;
 	}

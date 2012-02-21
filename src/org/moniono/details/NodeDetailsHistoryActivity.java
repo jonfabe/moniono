@@ -97,10 +97,12 @@ public class NodeDetailsHistoryActivity extends Activity {
 						next.getType().getPluralKey());
 			}
 			byte[] imageByteArray = bData.getChart(next);
+			if(imageByteArray != null){
 			this.chartsList.add(BitmapFactory.decodeByteArray(imageByteArray,
 					0, imageByteArray.length));
 			cursor.addRow(new String[] { new Integer(i).toString(),
 					intervalString });
+			}
 		}
 		startManagingCursor(cursor);
 

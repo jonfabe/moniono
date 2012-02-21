@@ -19,6 +19,9 @@
 
 package org.moniono.search;
 
+import static org.moniono.util.CommonConstants.HTTP_CONNECTION_TIMEOUT;
+import static org.moniono.util.CommonConstants.HTTP_SO_TIMEOUT;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,12 +33,12 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONTokener;
-import org.moniono.R;
 import org.moniono.util.LogTags;
 
 import android.content.Context;
@@ -50,16 +53,27 @@ public abstract class DataManager {
 	}
 	
 	protected InputStream getHttpStream(String url) {
-		HttpClient client = new DefaultHttpClient();
+		
+		HttpParams httpParameters = new BasicHttpParams();
+
+		Log.v(LogTags.NETWORK.toString(),"SO Timeout: "+HttpConnectionParams.getSoTimeout(httpParameters));
+		Log.v(LogTags.NETWORK.toString(),"Connection Timeout: "+HttpConnectionParams.getConnectionTimeout(httpParameters));
+		HttpConnectionParams.setConnectionTimeout(httpParameters, HTTP_CONNECTION_TIMEOUT);
+		HttpConnectionParams.setSoTimeout(httpParameters, HTTP_SO_TIMEOUT);
+		DefaultHttpClient client = new DefaultHttpClient(httpParameters);
 		HttpGet request = new HttpGet(url);
+		
 		HttpResponse response = null;
 		try {
 			Log.v(LogTags.NETWORK.toString(), "Requesting URL: "+url);
 			response = client.execute(request);
-		} catch (ClientProtocolException e) {
+		} catch (Exception e) {
+			/* Catch arbitrary network connection exceptions. */
 			Log.w(LogTags.NETWORK.toString(), "Error during network access.",e);
-		} catch (IOException e) {
-			Log.w(LogTags.NETWORK.toString(), "Error during network access.",e);
+//		}catch (ClientProtocolException e) {
+//			Log.w(LogTags.NETWORK.toString(), "Error during network access.",e);
+//		} catch (IOException e) {
+//			Log.w(LogTags.NETWORK.toString(), "Error during network access.",e);
 		}
 		if (response != null) {
 			try {

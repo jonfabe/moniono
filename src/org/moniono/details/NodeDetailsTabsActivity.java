@@ -129,29 +129,34 @@ public class NodeDetailsTabsActivity extends TabActivity {
 		}
 
 		BandwidthData bData = data.getBandwidthData();
-		Set<BandwidthIntervalTimespan> intervals = bData.getTimespans();
-		if (intervals != null && intervals.size() > 0) {
+		if (bData != null) {
+			Set<BandwidthIntervalTimespan> intervals = bData.getTimespans();
+			if (intervals != null && intervals.size() > 0) {
 
-			Intent historyIntent = new Intent().setClass(this,
-					NodeDetailsHistoryActivity.class);
-			historyIntent.putExtra(NODE_HASH.toString(), data.getFingerprint());
-			historyIntent.putExtra(NODE_DATA.toString(), data);
-			historyIntent.putExtra(IS_RELAY.toString(),
-					extras.getBoolean(IS_RELAY.toString()));
+				Intent historyIntent = new Intent().setClass(this,
+						NodeDetailsHistoryActivity.class);
+				historyIntent.putExtra(NODE_HASH.toString(),
+						data.getFingerprint());
+				historyIntent.putExtra(NODE_DATA.toString(), data);
+				historyIntent.putExtra(IS_RELAY.toString(),
+						extras.getBoolean(IS_RELAY.toString()));
 
-			// Initialize a TabSpec for each tab and add it to the TabHost
-			View historyIndicator = LayoutInflater.from(this).inflate(
-					R.layout.moniono_tab_widget, getTabWidget(), false);
-			TextView historyTitle = (TextView) historyIndicator
-					.findViewById(R.id.title);
-			historyTitle.setText(getResources().getString(R.string.history));
-			ImageView historyIcon = (ImageView) historyIndicator
-					.findViewById(R.id.icon);
-			historyIcon.setImageResource(R.drawable.ic_tab_history);
+				// Initialize a TabSpec for each tab and add it to the TabHost
+				View historyIndicator = LayoutInflater.from(this).inflate(
+						R.layout.moniono_tab_widget, getTabWidget(), false);
+				TextView historyTitle = (TextView) historyIndicator
+						.findViewById(R.id.title);
+				historyTitle
+						.setText(getResources().getString(R.string.history));
+				ImageView historyIcon = (ImageView) historyIndicator
+						.findViewById(R.id.icon);
+				historyIcon.setImageResource(R.drawable.ic_tab_history);
 
-			TabHost.TabSpec policySpec = tabHost.newTabSpec("history")
-					.setIndicator(historyIndicator).setContent(historyIntent);
-			tabHost.addTab(policySpec);
+				TabHost.TabSpec policySpec = tabHost.newTabSpec("history")
+						.setIndicator(historyIndicator)
+						.setContent(historyIntent);
+				tabHost.addTab(policySpec);
+			}
 		}
 
 		tabHost.setCurrentTab(0);

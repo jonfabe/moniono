@@ -75,7 +75,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                 android:id="@+id/help_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/help01"
+                android:text="@string/help_screen_text"
                 android:autoLink="all"
                 android:textAppearance="?android:attr/textAppearanceMedium" 
                 android:paddingBottom="10px"/>

@@ -135,7 +135,7 @@ public class MonionoActivity extends ListActivity {
 		RelaysClickListener rcl = new RelaysClickListener(this);
 		this.mRelayMenuEntry.setOnClickListener(rcl);
 		if (!NodesDataManager.hasManager()) {
-			new NodesDataRefreshThread(this).start();
+			new NodesDataRefreshThread(this, false).start();
 		}
 	}
 
@@ -283,7 +283,7 @@ public class MonionoActivity extends ListActivity {
 			this.dBase.close();
 			break;
 		case ACTIVITY_NODE_DETAILS:
-			NodesDataManager man = NodesDataManager.getInstance(this);
+			NodesDataManager man = this.st.getMan();
 			int identifier = new Long(id).intValue();
 			isRelay = man.isRelay(identifier);
 			if (isRelay) {
@@ -316,38 +316,56 @@ public class MonionoActivity extends ListActivity {
 		i.putExtra(NODE_HASH.toString(), thread.getHash());
 		i.putExtra(IS_RELAY.toString(), thread.isRelay());
 		i.putExtra(NODE_DATA.toString(), data);
-		Log.i("Activity", "Dismissing dialog");
+		Log.i(LogTags.ACTIVITY.toString(), "Dismissing dialog");
 		dialog.dismiss();
 		startActivityForResult(i, thread.getCode());
 	}
 
 	public void processResults() {
 		Log.i(LogTags.ACTIVITY.toString(), "Processing result.");
-		Cursor c = this.st.getResultingCursor(this.bridgesActive,
-				this.relaysActive);
-		startManagingCursor(c);
+		String errorCode = this.st.getErrorCode();
+		if (errorCode == null) {
+			Cursor c = this.st.getResultingCursor(this.bridgesActive,
+					this.relaysActive);
+			startManagingCursor(c);
 
-		String[] from = new String[] { CURSOR_FIELD_ONLINE, "name",
-				"fingerprint", CURSOR_FIELD_FAVICON };
-		int[] to = new int[] { R.id.node_type_icon, R.id.main_list_name,
-				R.id.main_list_fingerprint, R.id.bookmark_icon };
-		SimpleCursorAdapter relayResults = new SimpleCursorAdapter(this,
-				R.layout.nodes_row, c, from, to);
+			String[] from = new String[] { CURSOR_FIELD_ONLINE, "name",
+					"fingerprint", CURSOR_FIELD_FAVICON };
+			int[] to = new int[] { R.id.node_type_icon, R.id.main_list_name,
+					R.id.main_list_fingerprint, R.id.bookmark_icon };
+			SimpleCursorAdapter relayResults = new SimpleCursorAdapter(this,
+					R.layout.nodes_row, c, from, to);
 
-		relayResults.setViewBinder(new NodeListViewBinder(this.st
-				.getFavorites(), this, this.st));
-		this.mResultsList.setAdapter(relayResults);
-		this.mResultsList.setTextFilterEnabled(true);
-		this.mResultsList
-				.setOnItemClickListener(new OnNodeClickListener(this,
-						new NodesDbAdapter(this),
-						MonionoActivity.ACTIVITY_NODE_DETAILS));
-		this.currentSearchString = this.st.getSearchString();
+			relayResults.setViewBinder(new NodeListViewBinder(this.st
+					.getFavorites(), this, this.st));
+			this.mResultsList.setAdapter(relayResults);
+			this.mResultsList.setTextFilterEnabled(true);
+			this.mResultsList.setOnItemClickListener(new OnNodeClickListener(
+					this, new NodesDbAdapter(this),
+					MonionoActivity.ACTIVITY_NODE_DETAILS));
+			this.currentSearchString = this.st.getSearchString();
 
-		this.searchStringLabel.setText(this.getResources().getString(
-				R.string.search_string)
-				+ " '" + this.currentSearchString + "'");
-		this.searchStringLabel.setVisibility(View.VISIBLE);
+			this.searchStringLabel.setText(this.getResources().getString(
+					R.string.search_string)
+					+ " '" + this.currentSearchString + "'");
+			this.searchStringLabel.setVisibility(View.VISIBLE);
+		} else {
+			this.fillList();
+			AlertDialog.Builder builder = new AlertDialog.Builder(this)
+					.setTitle(getString(R.string.error_title)).setMessage(
+							errorCode);
+
+			builder.setPositiveButton(R.string.close,
+					new Dialog.OnClickListener() {
+
+						public void onClick(DialogInterface dialogInterface,
+								int i) {
+							dialogInterface.dismiss();
+						}
+					});
+			builder.setCancelable(false);
+			builder.create().show();
+		}
 	}
 
 	EditText getMSearchString() {
@@ -409,41 +427,37 @@ public class MonionoActivity extends ListActivity {
 				final String title = this.getString(R.string.app_name) + " v"
 						+ packageInfo.versionName;
 
-				final String message = this.getString(R.string.licenseAll);
+				final String message = this.getString(R.string.copyright)
+						+ "\n\n" + this.getString(R.string.gpl) + "\n\n"
+						+ this.getString(R.string.gpl_location) + "\n\n"
+						+ this.getString(R.string.source_code_location);
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(this)
-						.setTitle(title)
-						.setMessage(message);
-				
-				builder.setPositiveButton(R.string.accept,
-								new Dialog.OnClickListener() {
+						.setTitle(title).setMessage(message);
 
-									public void onClick(
-											DialogInterface dialogInterface,
-											int i) {
-										SharedPreferences.Editor editor = prefs
-												.edit();
-										editor.putLong(
-												"version_license_agreed",
-												packageInfo.versionCode);
-										editor.commit();
-										dialogInterface.dismiss();
-									}
-								});
+				builder.setPositiveButton(R.string.accept,
+						new Dialog.OnClickListener() {
+
+							public void onClick(
+									DialogInterface dialogInterface, int i) {
+								SharedPreferences.Editor editor = prefs.edit();
+								editor.putLong("version_license_agreed",
+										packageInfo.versionCode);
+								editor.commit();
+								dialogInterface.dismiss();
+							}
+						});
 				builder.setNegativeButton(R.string.reject,
 						new Dialog.OnClickListener() {
 
-					public void onClick(
-							DialogInterface dialogInterface,
-							int i) {
-						SharedPreferences.Editor editor = prefs
-								.edit();
-						editor.putLong(
-								"version_license_agreed",-1);
-						editor.commit();
-						MonionoActivity.this.finish();
-					}
-				});
+							public void onClick(
+									DialogInterface dialogInterface, int i) {
+								SharedPreferences.Editor editor = prefs.edit();
+								editor.putLong("version_license_agreed", -1);
+								editor.commit();
+								MonionoActivity.this.finish();
+							}
+						});
 				builder.setCancelable(false);
 				builder.create().show();
 			}

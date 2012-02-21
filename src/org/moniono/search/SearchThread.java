@@ -52,6 +52,7 @@ public class SearchThread implements Runnable {
 	private MatrixCursor resultingCombinedCursor = null;
 	private Handler handler = null;
 	private NodesDataManager man = null;
+	private String errorCode = null;
 
 	public SearchThread(MonionoActivity iniCtx, NodesDbAdapter iniDBase,
 			String iniSearchString, boolean iniCondiderBridges,
@@ -81,41 +82,42 @@ public class SearchThread implements Runnable {
 		this.dBase.close();
 
 		this.man = NodesDataManager.getInstance(this.ctx);
-
-		Message msg = new Message();
-		Bundle b = new Bundle();
-		b.putInt("rid", R.string.dialog_searching);
-		msg.setData(b);
-		this.handler.sendMessage(msg);
-
-		List<String[]> results = this.man.search(
-				this.searchString.toLowerCase(), this.favorites);
-
-		this.resultingCombinedCursor = new MatrixCursor(new String[] { "_id",
-				"name", CURSOR_FIELD_FINGERPRINT, CURSOR_FIELD_FAVICON,
-				CURSOR_FIELD_ONLINE }, results.size());
-		List<String[]> resultsRelays = new LinkedList<String[]>();
-		List<String[]> resultsBridges = new LinkedList<String[]>();
-		for (String[] result : results) {
-			this.resultingCombinedCursor.addRow(result);
-			int index = Integer.parseInt(result[0]);
-			if (this.isRelay(index)) {
-				resultsRelays.add(result);
-			} else {
-				resultsBridges.add(result);
+		this.errorCode = this.man.getErrorCode();
+		if(this.errorCode == null){
+			Message msg = new Message();
+			Bundle b = new Bundle();
+			b.putInt("rid", R.string.dialog_searching);
+			msg.setData(b);
+			this.handler.sendMessage(msg);
+			List<String[]> results = this.man.search(
+					this.searchString.toLowerCase(), this.favorites);
+	
+			this.resultingCombinedCursor = new MatrixCursor(new String[] { "_id",
+					"name", CURSOR_FIELD_FINGERPRINT, CURSOR_FIELD_FAVICON,
+					CURSOR_FIELD_ONLINE }, results.size());
+			List<String[]> resultsRelays = new LinkedList<String[]>();
+			List<String[]> resultsBridges = new LinkedList<String[]>();
+			for (String[] result : results) {
+				this.resultingCombinedCursor.addRow(result);
+				int index = Integer.parseInt(result[0]);
+				if (this.isRelay(index)) {
+					resultsRelays.add(result);
+				} else {
+					resultsBridges.add(result);
+				}
 			}
-		}
-		this.resultingRelaysCursor = new MatrixCursor(new String[] { "_id",
-				"name", CURSOR_FIELD_FINGERPRINT, CURSOR_FIELD_FAVICON,
-				CURSOR_FIELD_ONLINE }, resultsRelays.size());
-		for (String[] result : resultsRelays) {
-			this.resultingRelaysCursor.addRow(result);
-		}
-		this.resultingBridgesCursor = new MatrixCursor(new String[] { "_id",
-				"name", CURSOR_FIELD_FINGERPRINT, CURSOR_FIELD_FAVICON,
-				CURSOR_FIELD_ONLINE }, resultsBridges.size());
-		for (String[] result : resultsBridges) {
-			this.resultingBridgesCursor.addRow(result);
+			this.resultingRelaysCursor = new MatrixCursor(new String[] { "_id",
+					"name", CURSOR_FIELD_FINGERPRINT, CURSOR_FIELD_FAVICON,
+					CURSOR_FIELD_ONLINE }, resultsRelays.size());
+			for (String[] result : resultsRelays) {
+				this.resultingRelaysCursor.addRow(result);
+			}
+			this.resultingBridgesCursor = new MatrixCursor(new String[] { "_id",
+					"name", CURSOR_FIELD_FINGERPRINT, CURSOR_FIELD_FAVICON,
+					CURSOR_FIELD_ONLINE }, resultsBridges.size());
+			for (String[] result : resultsBridges) {
+				this.resultingBridgesCursor.addRow(result);
+			}
 		}
 		this.handler.sendEmptyMessage(0);
 	}
@@ -162,7 +164,7 @@ public class SearchThread implements Runnable {
 			return this.resultingRelaysCursor;
 		}
 		throw new IllegalArgumentException(
-				"At least one parameter must be set to ture.");
+				"At least one parameter must be set to true.");
 	}
 
 	/**
@@ -188,6 +190,14 @@ public class SearchThread implements Runnable {
 					"Illegal index provided. Index must lower or equal to number of known nodes.");
 		}
 		return this.man.isRelay(index);
+	}
+
+	public String getErrorCode() {
+		return this.errorCode;
+	}
+
+	public NodesDataManager getMan() {
+		return this.man;
 	}
 
 }

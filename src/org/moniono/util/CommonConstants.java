@@ -27,6 +27,9 @@ package org.moniono.util;
  */
 public final class CommonConstants {
 	
+	public static final int HTTP_SO_TIMEOUT = 5 * 1000;
+	public static final int HTTP_CONNECTION_TIMEOUT = 5 * 1000;
+	
 	/**
 	 * Constant representing an empty string.
 	 */

@@ -20,6 +20,8 @@
 package org.moniono.search;
 
 import static org.moniono.util.CommonConstants.CHART_URL;
+import static org.moniono.util.CommonConstants.HTTP_CONNECTION_TIMEOUT;
+import static org.moniono.util.CommonConstants.HTTP_SO_TIMEOUT;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -40,8 +42,12 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -87,7 +93,10 @@ public class BandwidthData implements Serializable {
 		}
 
 		public void run() {
-			HttpClient httpclient = new DefaultHttpClient();
+			HttpParams httpParameters = new BasicHttpParams();
+			HttpConnectionParams.setConnectionTimeout(httpParameters, HTTP_CONNECTION_TIMEOUT);
+			HttpConnectionParams.setSoTimeout(httpParameters, HTTP_SO_TIMEOUT);
+			HttpClient httpclient = new DefaultHttpClient(httpParameters);
 			HttpPost httppost = new HttpPost(
 					CHART_URL);
 

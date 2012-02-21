@@ -34,6 +34,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import org.moniono.R;
 import org.moniono.util.LogTags;
 
 import android.content.Context;
@@ -80,6 +81,9 @@ public class NodesDataManager extends DataManager implements Serializable {
 	private String[] bridgeFingerprintHashes;
 	private String[] bridgeLowerFingerprintHashes;
 	private boolean[] runningBridges;
+	
+	private String errorCode; 
+	private boolean refreshInitiated = false;
 
 	public synchronized static void refreshData(Context iniCtx) {
 		NodesDataManager newManager = new NodesDataManager(iniCtx);
@@ -93,16 +97,22 @@ public class NodesDataManager extends DataManager implements Serializable {
 	}
 
 	public synchronized static NodesDataManager getInstance(Context iniCtx) {
-		if (manager == null) {
-			manager = new NodesDataManager(iniCtx);
-		}else{
+		NodesDataManager result = manager;
+		if (result == null) {
+			result =  new NodesDataManager(iniCtx);
+			manager = result;
+		}else if(!result.refreshInitiated){
+			if(result.errorCode != null){
+				new NodesDataRefreshThread(iniCtx,true).start();
+				result.refreshInitiated = true;
+			}
 			Calendar now = new GregorianCalendar();
-			Log.v(LogTags.TEMP.toString(), "Now "+now.getTime().toString()+" => "+manager.refreshTime.getTime().toString()+" => "+manager.refreshTime.compareTo(now));
-			if(manager.refreshTime.compareTo(now) < 0){
-				new NodesDataRefreshThread(iniCtx).start();
+			if(result.refreshTime.compareTo(now) < 0){
+				new NodesDataRefreshThread(iniCtx,false).start();
+				result.refreshInitiated = true;
 			}
 		}
-		return manager;
+		return result;
 	}
 	
 	public synchronized static boolean hasManager(){
@@ -111,87 +121,93 @@ public class NodesDataManager extends DataManager implements Serializable {
 
 	private void fillSearchDatabase() {
 		JSONTokener tokener = this.getJson(NODES_LIST_URL);
-		try {
-			JSONObject json = (JSONObject) tokener.nextValue();
-
-			JSONArray relays = json.getJSONArray(RELAYS_JSON_KEY);
-			long start = System.currentTimeMillis();
-			if (relays != null && relays.length() > 0) {
-				this.relayNames = new String[relays.length()];
-				this.relayLowerNames = new String[relays.length()];
-				this.relayFingerprintHashes = new String[relays.length()];
-				this.relayLowerFingerprintHashes = new String[relays.length()];
-				this.relayAddresses = new String[relays.length()][];// [];
-				this.runningRelays = new boolean[relays.length()];
-				for (int i = 0; i < relays.length(); i++) {
-					JSONObject relay = relays.getJSONObject(i);
-					String nextName = "";
-
-					if (relay.has(RELAY_NICKNAME_JSON_KEY)) {
-						nextName = relay.getString(RELAY_NICKNAME_JSON_KEY);
-					}
-					this.relayNames[i] = nextName;
-					this.relayLowerNames[i] = this.relayNames[i].toLowerCase();
-					this.relayFingerprintHashes[i] = relay
-							.getString(RELAY_FINGERPRINT_JSON_KEY);
-					this.relayLowerFingerprintHashes[i] = this.relayFingerprintHashes[i]
-							.toLowerCase();
-					this.runningRelays[i] = relay.getBoolean(RELAY_RUNING_JSON_KEY);
-					String[]/* [] */addrs = EMPTY_STRING_ARRAY;
-					if (relay.has(RELAY_ADDRESSES_JSON_KEY)) {
-						JSONArray addressesArray = relay
-								.getJSONArray(RELAY_ADDRESSES_JSON_KEY);
-						addrs = new String[addressesArray.length()];// [];
-						for (int j = 0; j < addrs.length; j++) {
-							addrs[j] = addressesArray.getString(j);// .split(".");
+		if(tokener != null){
+			try {
+				JSONObject json = (JSONObject) tokener.nextValue();
+	
+				JSONArray relays = json.getJSONArray(RELAYS_JSON_KEY);
+				long start = System.currentTimeMillis();
+				if (relays != null && relays.length() > 0) {
+					this.relayNames = new String[relays.length()];
+					this.relayLowerNames = new String[relays.length()];
+					this.relayFingerprintHashes = new String[relays.length()];
+					this.relayLowerFingerprintHashes = new String[relays.length()];
+					this.relayAddresses = new String[relays.length()][];// [];
+					this.runningRelays = new boolean[relays.length()];
+					for (int i = 0; i < relays.length(); i++) {
+						JSONObject relay = relays.getJSONObject(i);
+						String nextName = "";
+	
+						if (relay.has(RELAY_NICKNAME_JSON_KEY)) {
+							nextName = relay.getString(RELAY_NICKNAME_JSON_KEY);
 						}
-						this.relayAddresses[i] = addrs;
+						this.relayNames[i] = nextName;
+						this.relayLowerNames[i] = this.relayNames[i].toLowerCase();
+						this.relayFingerprintHashes[i] = relay
+								.getString(RELAY_FINGERPRINT_JSON_KEY);
+						this.relayLowerFingerprintHashes[i] = this.relayFingerprintHashes[i]
+								.toLowerCase();
+						this.runningRelays[i] = relay.getBoolean(RELAY_RUNING_JSON_KEY);
+						String[] addrs = EMPTY_STRING_ARRAY;
+						if (relay.has(RELAY_ADDRESSES_JSON_KEY)) {
+							JSONArray addressesArray = relay
+									.getJSONArray(RELAY_ADDRESSES_JSON_KEY);
+							addrs = new String[addressesArray.length()];// [];
+							for (int j = 0; j < addrs.length; j++) {
+								addrs[j] = addressesArray.getString(j);// .split(".");
+							}
+							this.relayAddresses[i] = addrs;
+						}
 					}
+				}else{
+					this.relayNames = new String[0];
+					this.relayLowerNames = new String[0];
+					this.relayFingerprintHashes = new String[0];
+					this.relayLowerFingerprintHashes = new String[0];
+					this.relayAddresses = new String[0][];
+					this.runningRelays = new boolean[0];
 				}
-			}else{
-				this.relayNames = new String[0];
-				this.relayLowerNames = new String[0];
-				this.relayFingerprintHashes = new String[0];
-				this.relayLowerFingerprintHashes = new String[0];
-				this.relayAddresses = new String[0][];// [];
-				this.runningRelays = new boolean[0];
-			}
-
-			JSONArray bridges = json.getJSONArray(BRIDGES_JSON_KEY);
-			if (bridges != null && bridges.length() > 0) {
-				this.bridgeFingerprintHashes = new String[bridges.length()];
-				this.bridgeLowerFingerprintHashes = new String[bridges.length()];
-				this.runningBridges = new boolean[bridges.length()];
-				for (int i = 0; i < bridges.length(); i++) {
-					JSONObject bridge = bridges.getJSONObject(i);
-					this.bridgeFingerprintHashes[i] = bridge
-							.getString(BRIDGE_FINGERPRINT_JSON_KEY);
-					this.bridgeLowerFingerprintHashes[i] = this.bridgeFingerprintHashes[i]
-							.toLowerCase();
-					this.runningBridges[i] = bridge
-							.getBoolean(BRIDGE_RUNING_JSON_KEY);
+	
+				JSONArray bridges = json.getJSONArray(BRIDGES_JSON_KEY);
+				if (bridges != null && bridges.length() > 0) {
+					this.bridgeFingerprintHashes = new String[bridges.length()];
+					this.bridgeLowerFingerprintHashes = new String[bridges.length()];
+					this.runningBridges = new boolean[bridges.length()];
+					for (int i = 0; i < bridges.length(); i++) {
+						JSONObject bridge = bridges.getJSONObject(i);
+						this.bridgeFingerprintHashes[i] = bridge
+								.getString(BRIDGE_FINGERPRINT_JSON_KEY);
+						this.bridgeLowerFingerprintHashes[i] = this.bridgeFingerprintHashes[i]
+								.toLowerCase();
+						this.runningBridges[i] = bridge
+								.getBoolean(BRIDGE_RUNING_JSON_KEY);
+					}
+				}else{
+					this.bridgeFingerprintHashes = new String[0];
+					this.bridgeLowerFingerprintHashes = new String[0];
+					this.runningBridges = new boolean[0];
 				}
-			}else{
-				this.bridgeFingerprintHashes = new String[0];
-				this.bridgeLowerFingerprintHashes = new String[0];
-				this.runningBridges = new boolean[0];
+	
+				long elapsed = System.currentTimeMillis() - start;
+				Log.i(LogTags.JSON_PROCESSING.toString(), this.relayNames.length + " relays added in "
+						+ elapsed + " milliseconds.");
+				
+				String relaysPublished = json.getString(RELAYS_PUBLISHED_KEY);
+				String bridgesPublished = json.getString(BRIDGES_PUBLISHED_KEY);
+				GregorianCalendar relaysPublishedCal = fromString(relaysPublished);
+				GregorianCalendar bridgesPublishedCal = fromString(bridgesPublished);
+				GregorianCalendar earliestPublishedCal = relaysPublishedCal.before(bridgesPublishedCal) ? relaysPublishedCal : bridgesPublishedCal;
+				earliestPublishedCal.add(Calendar.MINUTE, MINUTES_PUBLICATION_REFRESH_DELAY);
+				GregorianCalendar defaultRefreshTimestamp = new GregorianCalendar();
+				defaultRefreshTimestamp.add(Calendar.MINUTE, MIN_MINUTES_REFRESH_DELAY);
+				this.refreshTime = earliestPublishedCal.compareTo(defaultRefreshTimestamp) >= 0 ? earliestPublishedCal : defaultRefreshTimestamp; 
+			} catch (JSONException e) {
+				Log.e(LogTags.JSON_PROCESSING.toString(), "Error procssing JSON data.",e);
 			}
-
-			long elapsed = System.currentTimeMillis() - start;
-			Log.i("SOME", this.relayNames.length + " relays added in "
-					+ elapsed + " milliseconds.");
-			
-			String relaysPublished = json.getString(RELAYS_PUBLISHED_KEY);
-			String bridgesPublished = json.getString(BRIDGES_PUBLISHED_KEY);
-			GregorianCalendar relaysPublishedCal = fromString(relaysPublished);
-			GregorianCalendar bridgesPublishedCal = fromString(bridgesPublished);
-			GregorianCalendar earliestPublishedCal = relaysPublishedCal.before(bridgesPublishedCal) ? relaysPublishedCal : bridgesPublishedCal;
-			earliestPublishedCal.add(Calendar.MINUTE, MINUTES_PUBLICATION_REFRESH_DELAY);
-			GregorianCalendar defaultRefreshTimestamp = new GregorianCalendar();
-			defaultRefreshTimestamp.add(Calendar.MINUTE, MIN_MINUTES_REFRESH_DELAY);
-			this.refreshTime = earliestPublishedCal.compareTo(defaultRefreshTimestamp) >= 0 ? earliestPublishedCal : defaultRefreshTimestamp; 
-		} catch (JSONException e) {
-			Log.e(LogTags.JSON_PROCESSING.toString(), "Error procssing JSON data.",e);
+		}else{
+			this.errorCode = this.ctx.getString(R.string.error_no_search_database_data);
+			new NodesDataRefreshThread(this.ctx,true).start();
+			this.refreshInitiated = true;
 		}
 	}
 
@@ -351,6 +367,10 @@ public class NodesDataManager extends DataManager implements Serializable {
 			return this.bridgeFingerprintHashes.length;
 		}
 		return this.relayNames.length + this.bridgeFingerprintHashes.length;
+	}
+
+	public String getErrorCode() {
+		return this.errorCode;
 	}
 	
 }
