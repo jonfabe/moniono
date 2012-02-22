@@ -18,30 +18,24 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. 
  -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10px" >
-
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" 
-        android:paddingBottom="20px">
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical" >
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical"
+	    android:padding="10px" >
+    <LinearLayout android:id="@+id/linearLayout1"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal" 
+	        android:paddingBottom="20px">
+        <ImageView android:id="@+id/imageView1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:src="@drawable/ic_launcher" />
+        <LinearLayout android:id="@+id/linearLayout2"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="center_horizontal"
+	            android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/help_title"
@@ -58,43 +52,31 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
     </LinearLayout>
-
-    <ScrollView
-        android:id="@+id/horizontalScrollView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20px" >
-
-            <TextView
-                android:id="@+id/help_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/help_screen_text"
-                android:autoLink="all"
-                android:textAppearance="?android:attr/textAppearanceMedium" 
-                android:paddingBottom="10px"/>
-            
-
-            <LinearLayout
-                android:id="@+id/linearLayout4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical" >
-
-                <Button
-                    android:id="@+id/help_close"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/close" />
+    <ScrollView android:id="@+id/horizontalScrollView1"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+        <LinearLayout android:id="@+id/linearLayout3"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical"
+	            android:padding="20px" >
+            <TextView android:id="@+id/help_content"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:text="@string/help_screen_text"
+	                android:autoLink="all"
+	                android:textAppearance="?android:attr/textAppearanceMedium" 
+	                android:paddingBottom="10px"/>
+            <LinearLayout android:id="@+id/linearLayout4"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:gravity="center_horizontal"
+	                android:orientation="vertical" >
+                <Button android:id="@+id/help_close"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="@string/close" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>

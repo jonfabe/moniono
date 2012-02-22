@@ -18,125 +18,102 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. 
  -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
-
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        style="@style/mOnionOStyle.Section">
-
-        <ImageView
-            android:id="@+id/bookmark_icon_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/bookmark"
-            android:visibility="visible"
-            style="@style/mOnionOStyle.ActionBarImage"/>
-
-        <ImageView
-            android:id="@+id/search_icon_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_menu_search"
-            android:visibility="visible"
-            style="@style/mOnionOStyle.ActionBarImage"/>
-
-        <ImageView
-            android:id="@+id/relay_icon_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/relay"
-            android:visibility="visible"
-            style="@style/mOnionOStyle.ActionBarImage"/>
-
-        <ImageView
-            android:id="@+id/bridge_icon_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/bridge"
-            android:visibility="visible"
-            style="@style/mOnionOStyle.ActionBarImage"/>
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:orientation="vertical" >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        style="@style/mOnionOStyle.Section">
+        <ImageView android:id="@+id/bookmark_icon_2"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:src="@drawable/bookmark"
+	            android:visibility="visible"
+	            style="@style/mOnionOStyle.ActionBarImage"/>
+        <ImageView android:id="@+id/search_icon_2"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:src="@drawable/ic_menu_search"
+	            android:visibility="visible"
+	            style="@style/mOnionOStyle.ActionBarImage"/>
+        <ImageView android:id="@+id/relay_icon_2"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:src="@drawable/relay"
+	            android:visibility="visible"
+	            style="@style/mOnionOStyle.ActionBarImage"/>
+        <ImageView android:id="@+id/bridge_icon_2"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:src="@drawable/bridge"
+            	android:visibility="visible"
+            	style="@style/mOnionOStyle.ActionBarImage"/>
     </LinearLayout>
-
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/search_wrapper"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" 
-        style="@style/mOnionOStyle.Section">
-
-        <TextView
-            android:id="@+id/search_label"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="@string/search"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:visibility="gone" 
-            style="@style/mOnionOStyle.TableTitleCell"/>
-
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="visible"
-            android:weightSum="7" >
-
-            <EditText
-                android:id="@+id/search_input"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="6"
-                android:hint="@string/search_hint"
-                android:visibility="gone"
-                android:scrollHorizontally="true"
-                android:singleLine="true"/>
-
-            <ImageView
-                android:id="@+id/ic_menu_search"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:src="@drawable/ic_menu_search"
-                android:visibility="gone" />
-
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        	android:id="@+id/search_wrapper"
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:orientation="horizontal" 
+        	style="@style/mOnionOStyle.Section">
+        <TextView android:id="@+id/search_label"
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            android:gravity="center_vertical"
+	            android:text="@string/search"
+	            android:textAppearance="?android:attr/textAppearanceSmall"
+	            android:visibility="gone" 
+	            style="@style/mOnionOStyle.TableTitleCell"/>
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal"
+	            android:visibility="visible"
+	            android:weightSum="7" >
+            <EditText android:id="@+id/search_input"
+	                android:layout_width="0dip"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="6"
+	                android:hint="@string/search_hint"
+	                android:visibility="gone"
+	                android:scrollHorizontally="true"
+	                android:singleLine="true"/>
+            <ImageView android:id="@+id/ic_menu_search"
+	                android:layout_width="0dip"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:gravity="center_vertical"
+	                android:src="@drawable/ic_menu_search"
+	                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/search_string_label"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/search"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:visibility="gone" 
-        style="@style/mOnionOStyle.Section"/>
-
-    <HorizontalScrollView
-        android:id="@+id/horizontalScrollView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-        <LinearLayout
-            android:id="@+id/linearLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ListView
-                android:id="@android:id/list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-                />
+    <TextView android:id="@+id/search_string_label"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_horizontal"
+	        android:text="@string/search"
+	        android:textAppearance="?android:attr/textAppearanceSmall"
+	        android:visibility="gone" 
+	        style="@style/mOnionOStyle.Section"/>
+    <TextView android:id="@+id/no_nodes_label"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_horizontal"
+	        android:text="@string/no_nodes"
+	        android:textAppearance="?android:attr/textAppearanceSmall"
+	        android:visibility="gone" 
+	        style="@style/mOnionOStyle.Section"/>
+    <HorizontalScrollView android:id="@+id/horizontalScrollView1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+        <LinearLayout android:id="@+id/linearLayout1"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal">
+            <ListView android:id="@android:id/list"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content" />
         </LinearLayout>
     </HorizontalScrollView>
-
 </LinearLayout>

@@ -17,51 +17,39 @@ You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. 
  -->
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="horizontal" 
         style="@style/mOnionOStyle.Section" android:background="@drawable/background_color_selector">
-        
-    <ImageView
-            android:id="@+id/node_type_icon"
+    <ImageView android:id="@+id/node_type_icon"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/relay"
             android:visibility="visible"/>
-    
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
-
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/main_list_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/bookmark_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/bookmark"
-            android:visibility="visible"/>
-
-    </LinearLayout>
-
-    <TextView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/main_list_fingerprint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-</LinearLayout>
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical" >
+	    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal" >
+	        <TextView
+		            xmlns:android="http://schemas.android.com/apk/res/android"
+		            android:id="@+id/main_list_name"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content" />
+	        <ImageView
+		            android:id="@+id/bookmark_icon"
+		            android:layout_width="wrap_content"
+		            android:layout_height="match_parent"
+		            android:src="@drawable/bookmark"
+		            android:visibility="visible"/>
+	    </LinearLayout>
+	    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        		android:id="@+id/main_list_fingerprint"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content" />
+	</LinearLayout>
 </LinearLayout>

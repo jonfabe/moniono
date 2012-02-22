@@ -44,9 +44,9 @@ import org.moniono.util.LogTags;
 import org.moniono.view.binder.FavoriteListViewBinder;
 import org.moniono.view.binder.NodeListViewBinder;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.DialogInterface;
@@ -57,7 +57,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -70,7 +69,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-public class MonionoActivity extends ListActivity {
+public class MonionoActivity extends Activity {
 
 	private NodesDbAdapter dBase = null;
 
@@ -83,6 +82,7 @@ public class MonionoActivity extends ListActivity {
 
 	private ListView mResultsList;
 	private TextView mSearchLabel;
+	private TextView mNoNodesLabel;
 	private EditText mSearchString;
 	private ImageView mSearchButton;
 
@@ -93,25 +93,25 @@ public class MonionoActivity extends ListActivity {
 
 	private boolean relaysActive = true;
 	private boolean bridgesActive = true;
-
 	private String currentSearchString = null;
 	private SearchThread st = null;
+	private Cursor openCursor = null;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.v(LogTags.ACTIVITY.toString(), "On create invoked ...");
 		checkLicense();
 		setContentView(R.layout.nodes_list);
 		this.dBase = new NodesDbAdapter(this);
 		Intent intent = getIntent();
 		this.mResultsList = (ListView) findViewById(android.R.id.list);
+		this.mNoNodesLabel = (TextView) findViewById(R.id.no_nodes_label);
 		this.mSearchLabel = (TextView) findViewById(R.id.search_label);
 		this.mSearchString = (EditText) findViewById(R.id.search_input);
 		this.mSearchButton = (ImageView) findViewById(R.id.ic_menu_search);
 		this.searchStringLabel = (TextView) findViewById(R.id.search_string_label);
-		Log.i("CREATION", this.mResultsList + " " + this.mSearchLabel + " "
-				+ this.mSearchString + " " + this.mSearchButton);
 		SearchButtonClickListener sbcl = new SearchButtonClickListener(this);
 		this.mSearchButton.setOnClickListener(sbcl);
 
@@ -127,7 +127,6 @@ public class MonionoActivity extends ListActivity {
 		} else {
 			this.fillList();
 		}
-		registerForContextMenu(getListView());
 		this.mBridgeMenuEntry = (ImageView) findViewById(R.id.bridge_icon_2);
 		BridgesClickListener bcl = new BridgesClickListener(this);
 		this.mBridgeMenuEntry.setOnClickListener(bcl);
@@ -198,6 +197,7 @@ public class MonionoActivity extends ListActivity {
 			@SuppressWarnings("unused") int requestCode,
 			@SuppressWarnings("unused") int resultCode,
 			@SuppressWarnings("unused") Intent intent) {
+		Log.v(LogTags.ACTIVITY.toString(), "Returning to main activity.");
 		if (this.currentSearchString == null
 				|| this.currentSearchString.equals("")) {
 			fillList();
@@ -205,8 +205,23 @@ public class MonionoActivity extends ListActivity {
 			search(this.currentSearchString);
 		}
 	}
+	
+	protected void onStop(){
+		super.onDestroy();
+		Log.v(LogTags.ACTIVITY.toString(),"Stopping");
+		this.dBase.close();
+	}
+	
+	private void closeCursor(){
+		if(this.openCursor != null){
+			this.openCursor.close();
+			this.openCursor = null;
+		}
+	}
 
 	void fillList() {
+		this.closeCursor();
+		this.mNoNodesLabel.setVisibility(View.GONE);
 		this.searchStringLabel.setVisibility(View.GONE);
 		this.dBase.open();
 		Cursor c = null;
@@ -218,7 +233,10 @@ public class MonionoActivity extends ListActivity {
 			c = this.dBase.fetchAllOfType(NodeType.RELAY.getIdentifier());
 		}
 		startManagingCursor(c);
-
+		this.openCursor = c;
+		if(c.getCount() == 0){
+			this.mNoNodesLabel.setVisibility(View.VISIBLE);
+		}
 		String[] from = new String[] { DbHelper.NODES_KEY_NAME,
 				DbHelper.NODES_KEY_FINGERPRINT_HASH, DbHelper.NODES_KEY_TYPE };
 		int[] to = new int[] { R.id.main_list_name, R.id.main_list_fingerprint,
@@ -227,9 +245,9 @@ public class MonionoActivity extends ListActivity {
 		SimpleCursorAdapter nodes = new SimpleCursorAdapter(this,
 				R.layout.nodes_row, c, from, to);
 		nodes.setViewBinder(new FavoriteListViewBinder());
-		setListAdapter(nodes);
 		this.dBase.close();
 		ListView mainList = (ListView) findViewById(android.R.id.list);
+		mainList.setAdapter(nodes);
 		OnItemClickListener listener = new OnNodeClickListener(this,
 				this.dBase, ACTIVITY_NODE_VIEW);
 		mainList.setOnItemClickListener(listener);
@@ -238,6 +256,7 @@ public class MonionoActivity extends ListActivity {
 
 	void search(String searchString) {
 		this.searchStringLabel.setVisibility(View.GONE);
+		this.mNoNodesLabel.setVisibility(View.GONE);
 		if (this.currentSearchString == null
 				|| !searchString.equals(this.currentSearchString)) {
 			Log.i(LogTags.SEARCH.toString(), "Searching for " + searchString);
@@ -259,20 +278,16 @@ public class MonionoActivity extends ListActivity {
 	}
 
 	public void handleSearchResults(ProgressDialog dialog) {
-		Log.i(LogTags.SEARCH.toString(), "Dismissing dialog.");
 		dialog.dismiss();
-		Log.i(LogTags.DIALOG.toString(), "Dialog dismissed.");
 		this.processResults();
 	}
 
 	public void openNodeView(long id, int code) {
-
 		String name = null;
 		String hash = null;
 		boolean isRelay = false;
 		switch (code) {
 		case ACTIVITY_NODE_VIEW:
-
 			this.dBase.open();
 			Cursor c = this.dBase.fetchNode(id);
 			name = c.getString(c.getColumnIndexOrThrow(DbHelper.NODES_KEY_NAME));
@@ -291,11 +306,9 @@ public class MonionoActivity extends ListActivity {
 			}
 			hash = man.getFingerprint(identifier);
 		}
-
 		ProgressDialog progDialog = ProgressDialog.show(MonionoActivity.this,
 				"", getResources().getString(R.string.dialog_loading_details),
 				true);
-
 		new Thread(new NodeDetailsFetchThread(this, hash, name, isRelay, code,
 				progDialog)).start();
 	}
@@ -322,6 +335,10 @@ public class MonionoActivity extends ListActivity {
 	}
 
 	public void processResults() {
+		if(this.openCursor != null){
+			this.openCursor.close();
+			this.openCursor = null;
+		}
 		Log.i(LogTags.ACTIVITY.toString(), "Processing result.");
 		String errorCode = this.st.getErrorCode();
 		if (errorCode == null) {
@@ -382,8 +399,8 @@ public class MonionoActivity extends ListActivity {
 
 					public boolean onMenuItemClick(
 							@SuppressWarnings("unused") MenuItem item) {
-						startActivity(new Intent(MonionoActivity.this,
-								LicenseActivity.class));
+						startActivityForResult(new Intent(MonionoActivity.this,
+								LicenseActivity.class),0);
 						return true;
 					}
 				});
@@ -393,8 +410,8 @@ public class MonionoActivity extends ListActivity {
 
 			public boolean onMenuItemClick(
 					@SuppressWarnings("unused") MenuItem item) {
-				startActivity(new Intent(MonionoActivity.this,
-						AboutActivity.class));
+				startActivityForResult(new Intent(MonionoActivity.this,
+						AboutActivity.class),0);
 				return true;
 			}
 		});
@@ -404,8 +421,8 @@ public class MonionoActivity extends ListActivity {
 
 			public boolean onMenuItemClick(
 					@SuppressWarnings("unused") MenuItem item) {
-				startActivity(new Intent(MonionoActivity.this,
-						HelpActivity.class));
+				startActivityForResult(new Intent(MonionoActivity.this,
+						HelpActivity.class),0);
 				return true;
 			}
 		});

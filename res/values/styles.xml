@@ -17,38 +17,35 @@ You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. -->
 <resources>
-
     <style name="NodeEntry">
         <item name="android:textColor">@color/dark</item>
     </style>
-
     <style name="NodeEntry.Red">
         <item name="android:textColor">@color/offline</item>
     </style>
-
     <style name="NodeEntry.Green">
         <item name="android:textColor">@color/online</item>
     </style>
-
-    <style name="mOnionOTabStyle" parent="@android:style/Widget.TabWidget">
+    <style name="mOnionOTabStyle"
+        	parent="@android:style/Widget.TabWidget">
         <item name="android:textColor">@drawable/tab_text_selector</item>
     </style>
-
-    <style name="mOnionOAlertDialogStyle" parent="@android:style/Theme.Dialog">
+    <style name="mOnionOAlertDialogStyle"
+        	parent="@android:style/Theme.Dialog">
         <item name="android:fullDark">@color/bright</item>
     </style>
-
-    <style name="mOnionOSpinner" parent="android:Widget">
+    <style name="mOnionOSpinner"
+        	parent="android:Widget">
         <item name="android:background">@drawable/spinner_background_selector</item>
         <item name="android:clickable">true</item>
     </style>
-
-    <style name="mOnionODropdownStyle" parent="@android:style/Widget.DropDownItem.Spinner">
+    <style name="mOnionODropdownStyle"
+        	parent="@android:style/Widget.DropDownItem.Spinner">
         <item name="android:background">@drawable/background_color_selector</item>
         <item name="android:checkMark">@drawable/radio_button_selector</item>
     </style>
-
-    <style name="mOnionOEditTextStyle" parent="@android:style/Widget.EditText">
+    <style name="mOnionOEditTextStyle"
+        	parent="@android:style/Widget.EditText">
         <item name="android:spinnerStyle">@style/mOnionOSpinner</item>
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">true</item>
@@ -59,8 +56,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
         <item name="android:textColorHint">@color/light</item>
         <item name="android:textColorHighlight">@color/bright</item>
     </style>
-
-    <style name="mOnionOStyle" parent="@android:style/Theme.Light.NoTitleBar">
+    <style name="mOnionOStyle"
+        	parent="@android:style/Theme.Light.NoTitleBar">
         <item name="android:editTextStyle">@style/mOnionOEditTextStyle</item>
         <item name="android:spinnerDropDownItemStyle">@style/mOnionODropdownStyle</item>
         <item name="android:alertDialogStyle">@style/mOnionOAlertDialogStyle</item>
@@ -71,18 +68,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
         <item name="android:tabStripEnabled">false</item>
         <item name="android:typeface">normal</item>
     </style>
-
     <style name="mOnionOStyle.TableTitleCell">
         <item name="android:paddingRight">15px</item>
     </style>
-
     <style name="mOnionOStyle.ActionBarImage">
         <item name="android:padding">5px</item>
     </style>
-
     <style name="mOnionOStyle.Section">
         <item name="android:paddingTop">5px</item>
         <item name="android:paddingBottom">5px</item>
     </style>
-
 </resources>
