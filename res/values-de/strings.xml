@@ -47,7 +47,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     <string name="flags">Flags</string>
     <string name="gpl_location">Eine Kopie der Lizenz kann unter http://www.gnu.org/licenses/old-licenses/gpl-2.0.html gefunden werden. Auf derselben Website ist auch eine inoffizielle, deutschsprachige Version verfügbar. Bitte beachten Sie, dass allein die englische Version rechtsverbindlich ist.</string>
     <string name="help">Hilfe</string>
-	<string name="help_screen_text">Eine anleitung zur Nutzung von mOnionOkann auf der Projekt-Homepage unter http://code.google.com/p/moniono gefunden werden. Die Informationen auf dieser Website werden regelmäßig aktualisiert.</string>
+	<string name="help_screen_text">Eine Anleitung zur Nutzung von mOnionOkann auf der Projekt-Homepage unter http://code.google.com/p/moniono gefunden werden. Die Informationen auf dieser Website werden regelmäßig aktualisiert.</string>
     <string name="history">Historie</string>
     <string name="history_chart_read">Lesezugriff</string>
     <string name="history_chart_write">Schreibzugriff</string>
