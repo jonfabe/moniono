@@ -54,7 +54,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     <string name="history_interval_selection">Select interval</string>
     <string name="info">Info</string>
     <string name="ip">OR Address</string>
+    <string name="latitude">Latitude</string>
     <string name="license">License</string>
+    <string name="longitude">Longitude</string>
     <string name="menu_delete">Delete Node</string>
     <string name="menu_edit">Edit Node</string>
     <string name="menu_favorites">Favorites</string>

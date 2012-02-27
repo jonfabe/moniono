@@ -197,6 +197,34 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 		                    	android:layout_width="wrap_content"
 		                    	android:layout_height="wrap_content" />
 		            </TableRow>
+		            <TableRow android:id="@+id/relay_details_latitude_row"
+		                	android:layout_width="match_parent"
+		                	android:layout_height="wrap_content"
+		                	android:layout_gravity="top"
+		                	android:visibility="gone" >
+		                <TextView android:id="@android:id/empty"
+		                    	android:layout_width="wrap_content"
+		                    	android:layout_height="wrap_content"
+		                    	android:text="@string/latitude"
+		                    	style="@style/mOnionOStyle.TableTitleCell"/>
+		                <TextView android:id="@+id/relay_details_latitude"
+		                    	android:layout_width="wrap_content"
+		                    	android:layout_height="wrap_content" />
+		            </TableRow>
+		            <TableRow android:id="@+id/relay_details_longitude_row"
+		                	android:layout_width="match_parent"
+		                	android:layout_height="wrap_content"
+		                	android:layout_gravity="top"
+		                	android:visibility="gone" >
+		                <TextView android:id="@android:id/empty"
+		                    	android:layout_width="wrap_content"
+		                    	android:layout_height="wrap_content"
+		                    	android:text="@string/longitude"
+		                    	style="@style/mOnionOStyle.TableTitleCell"/>
+		                <TextView android:id="@+id/relay_details_longitude"
+		                    	android:layout_width="wrap_content"
+		                    	android:layout_height="wrap_content" />
+		            </TableRow>
 		            <TableRow android:id="@+id/relay_details_pool_assignment_row"
 		                	android:layout_width="match_parent"
 		                	android:layout_height="wrap_content"

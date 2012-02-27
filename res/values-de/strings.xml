@@ -53,7 +53,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     <string name="history_interval_selection">Intervall wählen</string>
     <string name="info">Info</string>
     <string name="ip">OR-Adresse</string>
+    <string name="latitude">Breite</string>
     <string name="license">Lizenz</string>
+    <string name="longitude">Länge</string>
     <string name="menu_delete">Knoten entfernen</string>
     <string name="menu_edit">Knoten bearbeiten</string>
     <string name="menu_favorites">Favoriten</string>

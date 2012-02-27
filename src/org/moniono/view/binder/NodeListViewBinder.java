@@ -42,7 +42,6 @@ import android.widget.TextView;
  * the corresponding online state, and shows or hides the favorite icon behind
  * each node name depending on if a favorite is given or not.
  * 
- * 
  * @author Jens Bruhn
  * @version 0.1
  */

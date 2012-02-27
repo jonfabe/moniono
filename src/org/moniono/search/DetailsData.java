@@ -25,6 +25,7 @@ import static org.moniono.util.JSONUtil.getCalendar;
 import static org.moniono.util.JSONUtil.getLong;
 import static org.moniono.util.JSONUtil.getString;
 import static org.moniono.util.JSONUtil.getStringArray;
+import static org.moniono.util.JSONUtil.getDouble;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -48,8 +49,8 @@ public class DetailsData implements Serializable {
 	
 	private static final String EMPTY_STRING = "";
 	private static final String ZERO = "0";
+	private static final int CACHE_TIMESPAN_IN_MINUTES = 5;
 
-	private static final String VALID_UNITL_KEY = "fresh_until";
 	private static final String NICKNAME_KEY = "nickname";
 	private static final String FINGERPRINT_KEY = "fingerprint";
 	private static final String HASH_KEY = "hashed_fingerprint";
@@ -64,6 +65,9 @@ public class DetailsData implements Serializable {
 	private static final String FAMILY_KEY = "family";
 	private static final String COUNTRY_KEY = "country";
 	private static final String POOL_ASSIGNMENT = "pool_assignment";
+	private static final String GEO_LATITUDE = "latitude";
+	private static final String GEO_LONGITUDE = "longitude";
+	
 	
 	private static final String ADVERTISED_BANDWIDTH_KEY = "advertised_bandwidth";
 
@@ -88,6 +92,8 @@ public class DetailsData implements Serializable {
 	private String country;
 	private String poolAssignment;
 	private BandwidthData bandwidthData;
+	private double geoLatitude = Double.NaN;
+	private double geoLongitude = Double.NaN;
 
 	public DetailsData(String iniNickname, String hash) {
 		this.nickname = iniNickname;
@@ -98,10 +104,8 @@ public class DetailsData implements Serializable {
 			throws IllegalStateException {
 		this.bandwidthData = iniBData;
 		try {
-			Calendar validDefault = new GregorianCalendar();
-			validDefault.add(Calendar.MINUTE, 30);
-			this.validUntil = getCalendar(VALID_UNITL_KEY, validDefault, jsonDetails);
-			this.validUntil = this.isValid() ? this.validUntil : validDefault; 
+			this.validUntil = new GregorianCalendar();
+			this.validUntil.add(Calendar.MINUTE, 5);
 			this.originalNickname = getString(NICKNAME_KEY, EMPTY_STRING,
 					jsonDetails);
 			if (iniNickname == null) {
@@ -125,6 +129,8 @@ public class DetailsData implements Serializable {
 			this.platform = getString(PLATFORM_KEY, null, jsonDetails);
 			this.country = getString(COUNTRY_KEY,null,jsonDetails);
 			this.poolAssignment = getString(POOL_ASSIGNMENT,null,jsonDetails);
+			this.geoLatitude = getDouble(GEO_LATITUDE,Double.NaN,jsonDetails);
+			this.geoLongitude = getDouble(GEO_LONGITUDE,Double.NaN,jsonDetails);
 			
 			this.advertisedBandwidth = getLong(ADVERTISED_BANDWIDTH_KEY, 0, jsonDetails);
 			this.advertisedBandwidthString = BandwidthUtil.getBandwidthString(this.advertisedBandwidth);
@@ -225,6 +231,18 @@ public class DetailsData implements Serializable {
 
 	public BandwidthData getBandwidthData() {
 		return this.bandwidthData;
+	}
+
+	public double getGeoLatitude() {
+		return this.geoLatitude;
+	}
+
+	public double getGeoLongitude() {
+		return this.geoLongitude;
+	}
+	
+	public boolean hasGeoInformation(){
+		return this.geoLatitude != Double.NaN && this.geoLongitude != Double.NaN;
 	}
 
 }

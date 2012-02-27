@@ -103,6 +103,10 @@ public class NodeDetailsOverviewActivity extends Activity {
 			this.setValue(relayData.getAdvertisedBandwidth(), R.id.relay_details_bandwidth, R.id.relay_details_bandwidth_row);
 			this.setValue(relayData.getCountry(), R.id.relay_details_country, R.id.relay_details_country_row);
 			this.setValue(relayData.getPoolAssignment(), R.id.relay_details_pool_assignment, R.id.relay_details_pool_assignment_row);
+			if(relayData.hasGeoInformation()){
+				this.setValue(Double.toString(relayData.getGeoLatitude()), R.id.relay_details_latitude, R.id.relay_details_latitude_row);
+				this.setValue(Double.toString(relayData.getGeoLongitude()), R.id.relay_details_longitude, R.id.relay_details_longitude_row);
+			}
 		
 			if(relayData.isRunning()){
 				this.mNicknameView.setTextColor(getResources().getColor(R.color.online));
