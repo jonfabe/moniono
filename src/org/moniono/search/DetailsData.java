@@ -94,6 +94,7 @@ public class DetailsData implements Serializable {
 	private BandwidthData bandwidthData;
 	private double geoLatitude = Double.NaN;
 	private double geoLongitude = Double.NaN;
+	private boolean geoInfo = false;
 
 	public DetailsData(String iniNickname, String hash) {
 		this.nickname = iniNickname;
@@ -131,6 +132,7 @@ public class DetailsData implements Serializable {
 			this.poolAssignment = getString(POOL_ASSIGNMENT,null,jsonDetails);
 			this.geoLatitude = getDouble(GEO_LATITUDE,Double.NaN,jsonDetails);
 			this.geoLongitude = getDouble(GEO_LONGITUDE,Double.NaN,jsonDetails);
+			this.geoInfo = jsonDetails.has(GEO_LATITUDE) && jsonDetails.has(GEO_LONGITUDE);
 			
 			this.advertisedBandwidth = getLong(ADVERTISED_BANDWIDTH_KEY, 0, jsonDetails);
 			this.advertisedBandwidthString = BandwidthUtil.getBandwidthString(this.advertisedBandwidth);
@@ -242,7 +244,7 @@ public class DetailsData implements Serializable {
 	}
 	
 	public boolean hasGeoInformation(){
-		return this.geoLatitude != Double.NaN && this.geoLongitude != Double.NaN;
+		return this.geoInfo;
 	}
 
 }
