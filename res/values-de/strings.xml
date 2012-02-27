@@ -33,7 +33,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     <string name="day">Tag</string>
     <string name="days">Tage</string>
     <string name="desc_published">Veröffentlicht</string>
-    <string name="desc_valid_after">Gültig ab</string>
     <string name="desc_valid_until">Gültig bis</string>
     <string name="dialog_loading">Lade Knotendaten ...</string>
     <string name="dialog_loading_details">Lade Knotendetails ...</string>

@@ -33,7 +33,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     <string name="day">Day</string>
     <string name="days">Days</string>
     <string name="desc_published">Published</string>
-    <string name="desc_valid_after">Valid after</string>
     <string name="desc_valid_until">Valid until</string>
     <string name="dialog_loading">Loading search data ...</string>
     <string name="dialog_loading_details">Loading node details ...</string>

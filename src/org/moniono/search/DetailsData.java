@@ -50,7 +50,6 @@ public class DetailsData implements Serializable {
 	private static final String ZERO = "0";
 
 	private static final String VALID_UNITL_KEY = "fresh_until";
-	private static final String VALID_AFTER_KEY = "valid_after";
 	private static final String NICKNAME_KEY = "nickname";
 	private static final String FINGERPRINT_KEY = "fingerprint";
 	private static final String HASH_KEY = "hashed_fingerprint";
