@@ -41,6 +41,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     <string name="edit_relay">Favoriten</string>
     <string name="error_no_search_database_data">Es konnten keine Daten für die Suchdatenbank heruntergeladen werden!\n\nDies könnte verschiedene Gründe haben. So könnte Ihr mobiles Gerät bspw. keine Verbindung zum Internet haben, oder der Daten-Server könnte nicht erreichbar sein oder fehlerhaft arbeiten.</string>
     <string name="error_title">Verarbeitungsfehler!</string>
+    <string name="error_wrong_search_database_data">Es konnten keine Daten für die Suchdatenbank heruntergeladen werden!\n\nEs ist ein Fehler bei der Verarbeitung der Ergebnisse aufgetreten.</string>
     <string name="family">Familie</string>
     <string name="fingerprint">Fingerprint</string>
     <string name="flags">Flags</string>

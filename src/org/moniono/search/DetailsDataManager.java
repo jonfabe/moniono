@@ -94,7 +94,11 @@ public class DetailsDataManager extends DataManager {
 				+ hashValue.toUpperCase());
 		if (tokener != null) {
 			try {
-				JSONObject json = (JSONObject) tokener.nextValue();
+				Object jsonValue = tokener.nextValue();
+				if (!(jsonValue instanceof JSONObject)) {
+					return null;
+				}
+				JSONObject json = (JSONObject) jsonValue;
 				JSONArray relayResults = json.getJSONArray(RESULT_RELAYS);
 				if (relayResults.length() > 0) {
 					return relayResults.getJSONObject(0);

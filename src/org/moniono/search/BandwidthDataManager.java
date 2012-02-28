@@ -69,9 +69,12 @@ public class BandwidthDataManager extends DataManager {
 			JSONTokener tokener = getJson(NODE_BANDWIDTH_BASE_URL
 					+ hash.toUpperCase());
 			if (tokener != null) {
-				JSONObject json = null;
 				try {
-					json = (JSONObject) tokener.nextValue();
+					Object jsonValue = tokener.nextValue();
+					if(!(jsonValue instanceof JSONObject)){
+						return null;
+					}
+					JSONObject json = (JSONObject) jsonValue;
 					Calendar validUntil = new GregorianCalendar();
 					Log.v(LogTags.JSON_PROCESSING.toString(), "Fresh until: "
 							+ validUntil);
@@ -124,15 +127,12 @@ public class BandwidthDataManager extends DataManager {
 	private JSONObject getBaseObject(String hashValue) {
 		JSONTokener tokener = getJson(NODE_BANDWIDTH_BASE_URL
 				+ hashValue.toUpperCase());
-		JSONObject json = null;
 		try {
-			json = (JSONObject) tokener.nextValue();
-		} catch (JSONException e) {
-			Log.e(LogTags.JSON_PROCESSING.toString(),
-					"Error processingd bandwidth data.", e);
-			return null;
-		}
-		try {
+			Object jsonValue = tokener.nextValue();
+			if(!(jsonValue instanceof JSONObject)){
+				return null;
+			}
+			JSONObject json = (JSONObject) jsonValue;
 			JSONArray relayResults = json.getJSONArray(RESULT_RELAYS);
 			if (relayResults.length() > 0) {
 				return relayResults.getJSONObject(0);
@@ -142,6 +142,8 @@ public class BandwidthDataManager extends DataManager {
 				return bridgeResults.getJSONObject(0);
 			}
 		} catch (JSONException e) {
+			Log.e(LogTags.JSON_PROCESSING.toString(),
+					"Error processingd bandwidth data.", e);
 			return null;
 		}
 		return null;

@@ -41,6 +41,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     <string name="edit_relay">Favorites</string>
     <string name="error_no_search_database_data">No data for search database could be downloaded!\n\nThis could have various reasons, e.g., your device is missing a network connection, or the data server is down or malfunctioning.</string>
 	<string name="error_title">Processing Error!</string>
+	<string name="error_wrong_search_database_data">No data for search database could be downloaded!\n\nAn error occured during data processing.</string>
     <string name="family">Family</string>
     <string name="fingerprint">Fingerprint</string>
     <string name="flags">Flags</string>
