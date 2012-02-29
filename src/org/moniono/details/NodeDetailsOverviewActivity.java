@@ -28,6 +28,7 @@ import java.util.Calendar;
 import org.moniono.R;
 import org.moniono.db.NodeType;
 import org.moniono.db.NodesDbAdapter;
+import org.moniono.details.overview.FavIconClickListener;
 import org.moniono.search.DetailsData;
 import org.moniono.util.LogTags;
 
@@ -46,89 +47,163 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+/**
+ * This class implements the control of the details overview tab as part of the
+ * node details activity ({@link NodeDetailsTabsActivity}). Its implementation
+ * is responsible to initially setup view elements w.r.t. the establishment of
+ * connections to data elements.
+ * 
+ * As foundation for successful application, the node's details information must
+ * be set at {@link org.moniono.util.CommonExtraId#NODE_DATA} within intent
+ * extras on invocation of {@link #onCreate(Bundle)}.
+ * 
+ * @author Jens Bruhn
+ * @version 0.1 - alpha
+ */
 public class NodeDetailsOverviewActivity extends Activity {
-	
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
-	private TextView mFingerprintView;
-	private TextView mNicknameView;
-	private String mFingerprint;
-	private DetailsData relayData;
-	private NodeType mType;
-	private ImageView favIcon;
-	private ImageView editIcon;
-	private ImageView saveIcon;
-	private ImageView resetIcon;
+	/**
+	 * Data format being used to layout time information.
+	 */
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(
+			"dd.MM.yyyy HH:mm");
+
+	/**
+	 * Text view being used to display the node's nickname if exists.
+	 */
+	private TextView nicknameText;
+	/**
+	 * Edit text field supporting the editing of a node's nickname. This field
+	 * is only shown if the node is added as favorite and nickname editing is
+	 * activated.
+	 */
 	private EditText nicknameEdit;
+	/**
+	 * The (hashed) fingerprint of the node.
+	 */
+	private String fingerprint;
+	/**
+	 * Detail information of the currently displayed node.
+	 */
+	private DetailsData details;
+	/**
+	 * Type of the currently displayed node.
+	 */
+	private NodeType type;
+	/**
+	 * Favorite icon allowing to add/remove the currently displayed node to from
+	 * the list of favorite nodes.
+	 */
+	private ImageView favIcon;
+	/**
+	 * Edit icon allowing to switch nickname edit mode on/off.
+	 */
+	private ImageView editIcon;
+	/**
+	 * Save icon which is used to confirm nickname editing, that is, storing
+	 * changes.
+	 */
+	private ImageView saveIcon;
+	/**
+	 * Reset icon which is used to reset a favorite node's nickname to the one
+	 * provided by Onionoo.
+	 */
+	private ImageView resetIcon;
 
-	private long mDbId = -1;
+	/**
+	 * The unique identifier of the node within the favorite nodes table, that
+	 * is, its primary key.
+	 */
+	private long dbId = -1;
 
-	private NodesDbAdapter dBase = null;
+	/**
+	 * Connection to database (abstraction).
+	 */
+	private NodesDbAdapter db = null;
 
+	/**
+	 * Boolean flag indicating if nickname edit mode is active (true) or not
+	 * (false).
+	 */
 	private boolean editMode = false;
-	
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.dBase = new NodesDbAdapter(this);
+		this.db = new NodesDbAdapter(this);
 		setContentView(R.layout.relay_details);
 		Bundle extras = getIntent().getExtras();
 
-		
-		relayData = (DetailsData) extras.get(NODE_DATA.toString());
-		
-		
-		
-		this.mNicknameView = (TextView) findViewById(R.id.relay_details_nickname);
-		this.mNicknameView.setText(relayData.getNickname());
-		
+		this.details = (DetailsData) extras.get(NODE_DATA.toString());
+
+		this.nicknameText = (TextView) findViewById(R.id.relay_details_nickname);
+		this.nicknameText.setText(this.details.getNickname());
+
 		if (extras.getBoolean(IS_RELAY.toString())) {
-			this.mType = NodeType.RELAY;
+			this.type = NodeType.RELAY;
 		} else {
-			this.mType = NodeType.BRIDGE;
+			this.type = NodeType.BRIDGE;
 		}
 		this.nicknameEdit = (EditText) findViewById(R.id.nickname_input);
 
-		this.mFingerprint = relayData.getFingerprint();
-		this.mFingerprintView = (TextView) findViewById(R.id.relay_details_hash);
-		this.mFingerprintView.setText(this.mFingerprint.substring(0, 20));
-		if(relayData != null){ 
-			this.setValue(relayData.getContact(), R.id.relay_details_contact, R.id.relay_details_contact_row);
-			this.setValue(relayData.getPlatform(), R.id.relay_details_platform, R.id.relay_details_platform_row);
-			this.setValue(relayData.getAddresses(), R.id.relay_details_ip, R.id.relay_details_ip_row);
-			this.setValue(relayData.getDirAddress(), R.id.relay_details_dir_address, R.id.relay_details_dir_address_row);
-			this.setValue(relayData.getRestartTimestamp(), R.id.relay_details_restart_time, R.id.relay_details_restart_time_row);
-			this.setValue(relayData.getAdvertisedBandwidth(), R.id.relay_details_bandwidth, R.id.relay_details_bandwidth_row);
-			this.setValue(relayData.getCountry(), R.id.relay_details_country, R.id.relay_details_country_row);
-			this.setValue(relayData.getPoolAssignment(), R.id.relay_details_pool_assignment, R.id.relay_details_pool_assignment_row);
-			if(relayData.hasGeoInformation()){
-				this.setValue(Double.toString(relayData.getGeoLatitude()), R.id.relay_details_latitude, R.id.relay_details_latitude_row);
-				this.setValue(Double.toString(relayData.getGeoLongitude()), R.id.relay_details_longitude, R.id.relay_details_longitude_row);
+		this.fingerprint = this.details.getFingerprint();
+		TextView mFingerprintView = (TextView) findViewById(R.id.relay_details_hash);
+		mFingerprintView.setText(this.fingerprint.substring(0, 20));
+		if (this.details != null) {
+			this.setValue(this.details.getContact(),
+					R.id.relay_details_contact, R.id.relay_details_contact_row);
+			this.setValue(this.details.getPlatform(),
+					R.id.relay_details_platform,
+					R.id.relay_details_platform_row);
+			this.setValue(this.details.getAddresses(), R.id.relay_details_ip,
+					R.id.relay_details_ip_row);
+			this.setValue(this.details.getDirAddress(),
+					R.id.relay_details_dir_address,
+					R.id.relay_details_dir_address_row);
+			this.setValue(this.details.getRestartTimestamp(),
+					R.id.relay_details_restart_time,
+					R.id.relay_details_restart_time_row);
+			this.setValue(this.details.getAdvertisedBandwidth(),
+					R.id.relay_details_bandwidth,
+					R.id.relay_details_bandwidth_row);
+			this.setValue(this.details.getCountry(),
+					R.id.relay_details_country, R.id.relay_details_country_row);
+			this.setValue(this.details.getPoolAssignment(),
+					R.id.relay_details_pool_assignment,
+					R.id.relay_details_pool_assignment_row);
+			if (this.details.hasGeoInformation()) {
+				this.setValue(Double.toString(this.details.getGeoLatitude()),
+						R.id.relay_details_latitude,
+						R.id.relay_details_latitude_row);
+				this.setValue(Double.toString(this.details.getGeoLongitude()),
+						R.id.relay_details_longitude,
+						R.id.relay_details_longitude_row);
 			}
-		
-			if(relayData.isRunning()){
-				this.mNicknameView.setTextColor(getResources().getColor(R.color.online));
-			}else{
-				this.mNicknameView.setTextColor(getResources().getColor(R.color.offline));
+
+			if (this.details.isRunning()) {
+				this.nicknameText.setTextColor(getResources().getColor(
+						R.color.online));
+			} else {
+				this.nicknameText.setTextColor(getResources().getColor(
+						R.color.offline));
 			}
 		}
-		
+
 		String[] family = null;
-		if (relayData != null) {
-			family = relayData.getFamily();
+		if (this.details != null) {
+			family = this.details.getFamily();
 		}
 		if (family != null) {
-			MatrixCursor cursor = new MatrixCursor(new String[] { "_id", "entry" },
-					family.length);
-			Log.i(LogTags.VIEW.toString(), family.length+" family entries");
-			for(int i = 0; i < family.length;i++){
-				cursor.addRow(new String[]{new Integer(i).toString(),family[i]});
-				Log.i(LogTags.VIEW.toString(),family[i]+" added");
+			MatrixCursor cursor = new MatrixCursor(new String[] { "_id",
+					"entry" }, family.length);
+			for (int i = 0; i < family.length; i++) {
+				cursor.addRow(new String[] { new Integer(i).toString(),
+						family[i] });
+				Log.i(LogTags.VIEW.toString(), family[i] + " added");
 			}
 			startManagingCursor(cursor);
-	
+
 			ListView familyList = (ListView) findViewById(R.id.relay_details_family_list);
 			String[] from = new String[] { "entry" };
 			int[] to = new int[] { R.id.relay_details_family_entry };
@@ -139,27 +214,11 @@ public class NodeDetailsOverviewActivity extends Activity {
 			row.setVisibility(View.VISIBLE);
 		}
 
-		this.mDbId = this.dBase.fetchNodeIdByFingerprint(this.mFingerprint);
+		this.dbId = this.db.fetchNodeIdByFingerprint(this.fingerprint);
 
 		this.favIcon = (ImageView) findViewById(R.id.bookmark_icon_3);
-		this.favIcon.setOnClickListener(new OnClickListener() {
-
-			public void onClick(View v) {
-				dBase.open();
-				if (mDbId > 0) {
-					dBase.open();
-					dBase.deleteNode(mDbId);
-					dBase.close();
-					mDbId = -1;
-				} else {
-					mDbId = dBase.createNode(mFingerprint, relayData.getNickname(),
-							mType.getIdentifier());
-				}
-				dBase.close();
-				editMode = false;
-				setGui();
-			}
-		});
+		this.favIcon.setOnClickListener(new FavIconClickListener(this.db,
+				this.dbId, this.details, this.type, this));
 
 		this.editIcon = (ImageView) findViewById(R.id.edit_name_icon);
 		this.editIcon.setOnClickListener(new OnClickListener() {
@@ -169,15 +228,15 @@ public class NodeDetailsOverviewActivity extends Activity {
 				setGui();
 			}
 		});
-		
+
 		this.saveIcon = (ImageView) findViewById(R.id.save_icon);
 		this.saveIcon.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
-				relayData.setNickname(nicknameEdit.getText().toString());
-				dBase.open();
-				dBase.updateNode(mDbId, mFingerprint, relayData.getNickname(), mType);
-				dBase.close();
+				details.setNickname(nicknameEdit.getText().toString());
+				db.open();
+				db.updateNode(dbId, fingerprint, details.getNickname(), type);
+				db.close();
 				editMode = false;
 				setGui();
 			}
@@ -186,11 +245,12 @@ public class NodeDetailsOverviewActivity extends Activity {
 		this.resetIcon.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
-				Log.i("Rest icon","Resetting to "+relayData.getOriginalNickname());
-				relayData.setNickname(relayData.getOriginalNickname());
-				dBase.open();
-				dBase.updateNode(mDbId, mFingerprint, relayData.getNickname(), mType);
-				dBase.close();
+				Log.i("Rest icon",
+						"Resetting to " + details.getOriginalNickname());
+				details.setNickname(details.getOriginalNickname());
+				db.open();
+				db.updateNode(dbId, fingerprint, details.getNickname(), type);
+				db.close();
 				editMode = false;
 				setGui();
 			}
@@ -198,45 +258,46 @@ public class NodeDetailsOverviewActivity extends Activity {
 		setGui();
 
 	}
-	
-	private void setValue(String text,int viewId, int rowId){
-		if(text != null && !text.equals("") && !text.equals("null")){
+
+	private void setValue(String text, int viewId, int rowId) {
+		if (text != null && !text.equals("") && !text.equals("null")) {
 			TextView view = (TextView) findViewById(viewId);
 			view.setText(text);
 			TableRow row = (TableRow) findViewById(rowId);
 			row.setVisibility(View.VISIBLE);
 		}
 	}
-	
-	private void setValue(Calendar cal,int viewId, int rowId){
+
+	private void setValue(Calendar cal, int viewId, int rowId) {
 		String calText = null;
-		if(cal != null){
-			StringBuilder timeStringBuilder = new StringBuilder( DATE_FORMAT.format( cal.getTime() ) );
+		if (cal != null) {
+			StringBuilder timeStringBuilder = new StringBuilder(
+					DATE_FORMAT.format(cal.getTime()));
 			calText = timeStringBuilder.toString();
 		}
 		this.setValue(calText, viewId, rowId);
 	}
-	
-	private void setValue(String[] textElements,int viewId, int rowId){
+
+	private void setValue(String[] textElements, int viewId, int rowId) {
 		String text = null;
-		if(textElements != null && textElements.length > 0){
+		if (textElements != null && textElements.length > 0) {
 			boolean first = true;
-			for(String next:textElements){
-				if(next != null && !next.equals("") && !next.equals("null")){
-					if(first){
+			for (String next : textElements) {
+				if (next != null && !next.equals("") && !next.equals("null")) {
+					if (first) {
 						text = next;
 						first = false;
-					}else{
-						text += ", "+next;
+					} else {
+						text += ", " + next;
 					}
 				}
 			}
 		}
 		this.setValue(text, viewId, rowId);
 	}
-	
+
 	private void setGui() {
-		if (this.mDbId > 0) {
+		if (this.dbId > 0) {
 			this.favIcon.setImageResource(R.drawable.bookmark);
 			this.editIcon.setVisibility(View.VISIBLE);
 			if (this.editMode) {
@@ -251,15 +312,15 @@ public class NodeDetailsOverviewActivity extends Activity {
 			this.saveIcon.setVisibility(View.GONE);
 			this.resetIcon.setVisibility(View.GONE);
 		}
-		if(this.editMode){
-			this.nicknameEdit.setText(relayData.getNickname());
+		if (this.editMode) {
+			this.nicknameEdit.setText(details.getNickname());
 			this.nicknameEdit.setVisibility(View.VISIBLE);
-			this.mNicknameView.setVisibility(View.GONE);
+			this.nicknameText.setVisibility(View.GONE);
 			this.editIcon.setImageResource(R.drawable.edit_active);
-		}else{
-			this.mNicknameView.setText(relayData.getNickname());
+		} else {
+			this.nicknameText.setText(details.getNickname());
 			this.nicknameEdit.setVisibility(View.GONE);
-			this.mNicknameView.setVisibility(View.VISIBLE);
+			this.nicknameText.setVisibility(View.VISIBLE);
 			this.editIcon.setImageResource(R.drawable.edit);
 		}
 		HorizontalScrollView hScrollView = (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);
@@ -276,6 +337,11 @@ public class NodeDetailsOverviewActivity extends Activity {
 		super.onBackPressed();
 		this.setResult(RESULT_OK);
 		this.finish();
+	}
+
+	public void setEditMode(boolean newEditMode) {
+		this.editMode = newEditMode;
+		this.setGui();
 	}
 
 }
