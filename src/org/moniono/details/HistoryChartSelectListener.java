@@ -19,10 +19,8 @@
 
 package org.moniono.details;
 
-import org.moniono.R;
 import org.moniono.util.LogTags;
 
-import android.content.res.Resources;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;

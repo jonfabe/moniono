@@ -41,18 +41,35 @@ public class NodeDetailsFlagsActivity extends ListActivity {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Comment body
 		super.onCreate(savedInstanceState);
+		/* Switch to the flags layout. */
 		setContentView(R.layout.relay_flags);
+
+		/* Receive node details information from intent extras. */
 		Bundle extras = getIntent().getExtras();
 		DetailsData relayData = (DetailsData) extras.get(NODE_DATA.toString());
 		NodeFlag[] flags = null;
+
+		/*
+		 * Request flags information from node details if there are node details
+		 * provided as part of the intent extras.
+		 */
 		if (relayData != null) {
 			flags = relayData.getFlags();
 		}
+
+		/*
+		 * Set an empty flags array as flags data if no flag information could
+		 * be determined.
+		 */
 		if (flags == null) {
 			flags = new NodeFlag[0];
 		}
+
+		/*
+		 * Construct a cursor for the flags ListView being the main part of the
+		 * flags layout.
+		 */
 		MatrixCursor cursor = new MatrixCursor(new String[] { "_id", "flag" },
 				flags.length);
 		for (int i = 0; i < flags.length; i++) {
@@ -60,6 +77,11 @@ public class NodeDetailsFlagsActivity extends ListActivity {
 					flags[i].toString() });
 		}
 		startManagingCursor(cursor);
+
+		/*
+		 * Associate the cursor through an adapter with the ListView of the
+		 * flags layout.
+		 */
 		String[] from = new String[] { "flag" };
 		int[] to = new int[] { R.id.flag_entry };
 		SimpleCursorAdapter flagResults = new SimpleCursorAdapter(this,

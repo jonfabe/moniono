@@ -27,6 +27,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+/**
+ * This class controls the License screen which is used to display license
+ * information for mOnionO.
+ * 
+ * @author Jens Bruhn
+ * @version 0.1 - alpha
+ */
 public class LicenseActivity extends Activity {
 
 	/** Called when the activity is first created. */
@@ -36,8 +43,8 @@ public class LicenseActivity extends Activity {
 		setContentView(R.layout.license);
 		Button b = (Button) this.findViewById(R.id.license_close);
 		b.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
+
+			public void onClick(@SuppressWarnings("unused") View v) {
 				LicenseActivity.this.finish();
 			}
 		});

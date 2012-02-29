@@ -27,6 +27,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+/**
+ * This class controls the Help screen which is used to display information on
+ * where to find further information about mOnionO.
+ * 
+ * @author Jens Bruhn
+ * @version 0.1 - alpha
+ */
 public class HelpActivity extends Activity {
 
 	/** Called when the activity is first created. */
@@ -36,8 +43,8 @@ public class HelpActivity extends Activity {
 		setContentView(R.layout.help);
 		Button b = (Button) this.findViewById(R.id.help_close);
 		b.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
+
+			public void onClick(@SuppressWarnings("unused") View v) {
 				HelpActivity.this.finish();
 			}
 		});

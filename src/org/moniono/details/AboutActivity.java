@@ -27,6 +27,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+/**
+ * This class controls the About screen which is used to display common
+ * information on mOnionO.
+ * 
+ * @author Jens Bruhn
+ * @version 0.1 - alpha
+ */
 public class AboutActivity extends Activity {
 
 	/** Called when the activity is first created. */
@@ -36,8 +43,8 @@ public class AboutActivity extends Activity {
 		setContentView(R.layout.about);
 		Button b = (Button) this.findViewById(R.id.about_close);
 		b.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
+
+			public void onClick(@SuppressWarnings("unused") View v) {
 				AboutActivity.this.finish();
 			}
 		});
