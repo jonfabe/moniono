@@ -37,7 +37,7 @@ public final class CommonConstants {
 	
 	public static final String CHART_URL = "https://chart.googleapis.com/chart";
 	
-	public static final String NODE_DATA_BASE_URL = "http://85.214.195.203";
+	public static final String NODE_DATA_BASE_URL = "http://onionoo.torproject.org/";
 	
 	public static final String NODES_LIST_URL = NODE_DATA_BASE_URL+"/summary/all";
 	
