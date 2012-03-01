@@ -76,5 +76,9 @@ public enum LogTags {
 	/**
 	 * Logging in the context data refresh.
 	 */
-	DATA_REFRESH;
+	DATA_REFRESH,
+	/**
+	 * Logging in the context data processing.
+	 */
+	DATA_PROCESSING;
 }

@@ -25,7 +25,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     <string name="accept">Annehmen</string>
     <string name="add_relay">Finden</string>
     <string name="app_name">mOnionO</string>
+    <string name="as">AS</string>
     <string name="bandwidth">Bandbreite</string>
+    <string name="city">Stadt</string>
     <string name="close">Schließen</string>
     <string name="common">Allgemein</string>
     <string name="contact">Kontakt</string>
@@ -45,6 +47,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     <string name="family">Familie</string>
     <string name="fingerprint">Fingerprint</string>
     <string name="flags">Flags</string>
+    <string name="geo_location">Länge/Breite</string>
     <string name="gpl_location">Eine Kopie der Lizenz kann unter http://www.gnu.org/licenses/old-licenses/gpl-2.0.html gefunden werden. Auf derselben Website ist auch eine inoffizielle, deutschsprachige Version verfügbar. Bitte beachten Sie, dass allein die englische Version rechtsverbindlich ist.</string>
     <string name="help">Hilfe</string>
 	<string name="help_screen_text">Eine Anleitung zur Nutzung von mOnionOkann auf der Projekt-Homepage unter http://code.google.com/p/moniono gefunden werden. Die Informationen auf dieser Website werden regelmäßig aktualisiert.</string>
@@ -54,9 +57,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     <string name="history_interval_selection">Intervall wählen</string>
     <string name="info">Info</string>
     <string name="ip">OR-Adresse</string>
-    <string name="latitude">Breite</string>
     <string name="license">Lizenz</string>
-    <string name="longitude">Länge</string>
     <string name="menu_delete">Knoten entfernen</string>
     <string name="menu_edit">Knoten bearbeiten</string>
     <string name="menu_favorites">Favoriten</string>

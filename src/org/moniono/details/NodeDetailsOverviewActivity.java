@@ -172,13 +172,16 @@ public class NodeDetailsOverviewActivity extends Activity {
 			this.setValue(this.details.getPoolAssignment(),
 					R.id.relay_details_pool_assignment,
 					R.id.relay_details_pool_assignment_row);
+			this.setValue(this.details.getAs(),
+					R.id.relay_details_as,
+					R.id.relay_details_as_row);
+			this.setValue(this.details.getCity(),
+					R.id.relay_details_city,
+					R.id.relay_details_city_row);
 			if (this.details.hasGeoInformation()) {
-				this.setValue(Double.toString(this.details.getGeoLatitude()),
-						R.id.relay_details_latitude,
-						R.id.relay_details_latitude_row);
-				this.setValue(Double.toString(this.details.getGeoLongitude()),
-						R.id.relay_details_longitude,
-						R.id.relay_details_longitude_row);
+				this.setValue(Double.toString(this.details.getGeoLatitude())+"/"+Double.toString(this.details.getGeoLongitude()),
+						R.id.relay_details_geo,
+						R.id.relay_details_geo_row);
 			}
 
 			if (this.details.isRunning()) {

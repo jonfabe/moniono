@@ -26,24 +26,64 @@ package org.moniono.util;
  * @version 0.1 - alpha *
  */
 public final class CommonConstants {
-	
+
+	/**
+	 * SO timeout in milliseconds for HTTP-requests. This value should always
+	 * set for connections in order to ensure centralized control of connection
+	 * properties.
+	 */
 	public static final int HTTP_SO_TIMEOUT = 5 * 1000;
+
+	/**
+	 * Connection timeout in milliseconds for HTTP-requests. This value should
+	 * always set for connections in order to ensure centralized control of
+	 * connection properties.
+	 */
 	public static final int HTTP_CONNECTION_TIMEOUT = 5 * 1000;
-	
+
 	/**
 	 * Constant representing an empty string.
 	 */
 	public static final String EMPTY_STRING = "";
-	
+
+	/** The base URL to the Google Chart API (POST). */
 	public static final String CHART_URL = "https://chart.googleapis.com/chart";
-	
+
+	/** The base URL to the restful Onionoo service. */
 	public static final String NODE_DATA_BASE_URL = "http://onionoo.torproject.org/";
-	
-	public static final String NODES_LIST_URL = NODE_DATA_BASE_URL+"/summary/all";
-	
-	public static final String NODE_DETAILS_BASE_URL = NODE_DATA_BASE_URL+"/details/lookup/";
-	
-	public static final String NODE_BANDWIDTH_BASE_URL = NODE_DATA_BASE_URL+"/bandwidth/lookup/";
+
+	/** The URL to request Onionoo summary information on nodes. */
+	public static final String NODES_LIST_URL = NODE_DATA_BASE_URL
+			+ "/summary/all";
+
+	/**
+	 * The URL to request Onionoo node details information. This URL is intended
+	 * to be extended with the (hashed) fingerprint of the node for which
+	 * details should be requested. The following sample show how the definitive
+	 * details URL for a particular node can be constructed:
+	 * 
+	 * String myNodeDetailsUrlString =
+	 * NODE_DETAILS_BASE_URL+myNodeFingerprint.toUpperCase();
+	 * 
+	 * In the example myNodeFingerprint must be a String.
+	 */
+	public static final String NODE_DETAILS_BASE_URL = NODE_DATA_BASE_URL
+			+ "/details/lookup/";
+
+	/**
+	 * The URL to request Onionoo node bandwidth history information. This URL
+	 * is intended to be extended with the (hashed) fingerprint of the node for
+	 * which bandwidth information should be requested. The following sample
+	 * show how the definitive details URL for a particular node can be
+	 * constructed:
+	 * 
+	 * String myNodeBandwidthUrlString =
+	 * NODE_BANDWIDTH_BASE_URL+myNodeFingerprint.toUpperCase();
+	 * 
+	 * In the example myNodeFingerprint must be a String.
+	 */
+	public static final String NODE_BANDWIDTH_BASE_URL = NODE_DATA_BASE_URL
+			+ "/bandwidth/lookup/";
 
 	/**
 	 * This constructor is only provided to prevent unintended instantiation of

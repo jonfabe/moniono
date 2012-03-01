@@ -183,6 +183,34 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 		                    	android:layout_width="wrap_content"
 		                    	android:layout_height="wrap_content" />
 		            </TableRow>
+		            <TableRow android:id="@+id/relay_details_as_row"
+		                	android:layout_width="match_parent"
+		                	android:layout_height="wrap_content"
+		                	android:layout_gravity="top"
+		                	android:visibility="gone" >
+		                <TextView android:id="@android:id/empty"
+		                    	android:layout_width="wrap_content"
+		                    	android:layout_height="wrap_content"
+		                    	android:text="@string/as"
+		                    	style="@style/mOnionOStyle.TableTitleCell"/>
+		                <TextView android:id="@+id/relay_details_as"
+		                    	android:layout_width="wrap_content"
+		                    	android:layout_height="wrap_content" />
+		            </TableRow>
+		            <TableRow android:id="@+id/relay_details_city_row"
+		                	android:layout_width="match_parent"
+		                	android:layout_height="wrap_content"
+		                	android:layout_gravity="top"
+		                	android:visibility="gone" >
+		                <TextView android:id="@android:id/empty"
+		                    	android:layout_width="wrap_content"
+		                    	android:layout_height="wrap_content"
+		                    	android:text="@string/city"
+		                    	style="@style/mOnionOStyle.TableTitleCell"/>
+		                <TextView android:id="@+id/relay_details_city"
+		                    	android:layout_width="wrap_content"
+		                    	android:layout_height="wrap_content" />
+		            </TableRow>
 		            <TableRow android:id="@+id/relay_details_country_row"
 		                	android:layout_width="match_parent"
 		                	android:layout_height="wrap_content"
@@ -197,7 +225,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 		                    	android:layout_width="wrap_content"
 		                    	android:layout_height="wrap_content" />
 		            </TableRow>
-		            <TableRow android:id="@+id/relay_details_latitude_row"
+		            <TableRow android:id="@+id/relay_details_geo_row"
 		                	android:layout_width="match_parent"
 		                	android:layout_height="wrap_content"
 		                	android:layout_gravity="top"
@@ -205,23 +233,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 		                <TextView android:id="@android:id/empty"
 		                    	android:layout_width="wrap_content"
 		                    	android:layout_height="wrap_content"
-		                    	android:text="@string/latitude"
+		                    	android:text="@string/geo_location"
 		                    	style="@style/mOnionOStyle.TableTitleCell"/>
-		                <TextView android:id="@+id/relay_details_latitude"
-		                    	android:layout_width="wrap_content"
-		                    	android:layout_height="wrap_content" />
-		            </TableRow>
-		            <TableRow android:id="@+id/relay_details_longitude_row"
-		                	android:layout_width="match_parent"
-		                	android:layout_height="wrap_content"
-		                	android:layout_gravity="top"
-		                	android:visibility="gone" >
-		                <TextView android:id="@android:id/empty"
-		                    	android:layout_width="wrap_content"
-		                    	android:layout_height="wrap_content"
-		                    	android:text="@string/longitude"
-		                    	style="@style/mOnionOStyle.TableTitleCell"/>
-		                <TextView android:id="@+id/relay_details_longitude"
+		                <TextView android:id="@+id/relay_details_geo"
 		                    	android:layout_width="wrap_content"
 		                    	android:layout_height="wrap_content" />
 		            </TableRow>

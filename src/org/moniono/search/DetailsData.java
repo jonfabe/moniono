@@ -64,9 +64,16 @@ public class DetailsData implements Serializable {
 	private static final String PLATFORM_KEY = "platform";
 	private static final String FAMILY_KEY = "family";
 	private static final String COUNTRY_KEY = "country";
-	private static final String POOL_ASSIGNMENT = "pool_assignment";
-	private static final String GEO_LATITUDE = "latitude";
-	private static final String GEO_LONGITUDE = "longitude";
+	private static final String POOL_ASSIGNMENT_KEY = "pool_assignment";
+	private static final String GEO_LATITUDE_KEY = "latitude";
+	private static final String GEO_LONGITUDE_KEY = "longitude";
+	
+	private static final String COUNTRY_NAME_KEY = "country_name";
+	private static final String REGION_NAME_KEY = "region_name";
+	private static final String CITY_NAME_KEY = "city_name";
+	
+	private static final String AS_NAME_KEY = "as_name";
+	private static final String AS_NUMBER_KEY = "as_number";
 	
 	
 	private static final String ADVERTISED_BANDWIDTH_KEY = "advertised_bandwidth";
@@ -90,8 +97,11 @@ public class DetailsData implements Serializable {
 	private String platform;
 	private String[] family;
 	private String country;
+	private String city;
+	private String as;
 	private String poolAssignment;
 	private BandwidthData bandwidthData;
+	private String geoLocation;
 	private double geoLatitude = Double.NaN;
 	private double geoLongitude = Double.NaN;
 	private boolean geoInfo = false;
@@ -128,11 +138,31 @@ public class DetailsData implements Serializable {
 			this.family = getStringArray(FAMILY_KEY, null, jsonDetails);
 			this.contact = getString(CONTACT_KEY, null, jsonDetails);
 			this.platform = getString(PLATFORM_KEY, null, jsonDetails);
-			this.country = getString(COUNTRY_KEY,null,jsonDetails);
-			this.poolAssignment = getString(POOL_ASSIGNMENT,null,jsonDetails);
-			this.geoLatitude = getDouble(GEO_LATITUDE,Double.NaN,jsonDetails);
-			this.geoLongitude = getDouble(GEO_LONGITUDE,Double.NaN,jsonDetails);
-			this.geoInfo = jsonDetails.has(GEO_LATITUDE) && jsonDetails.has(GEO_LONGITUDE);
+			this.country = getString(COUNTRY_NAME_KEY,null,jsonDetails);
+			String countryCode = getString(COUNTRY_KEY,null,jsonDetails);
+			if(this.country == null && countryCode != null){
+				this.country = countryCode;
+			}else if(this.country != null && countryCode != null){
+				this.country += " ("+countryCode+")";
+			}
+			this.city = getString(CITY_NAME_KEY,null,jsonDetails);
+			String region = getString(REGION_NAME_KEY,null,jsonDetails);
+			if(this.city == null && region != null){
+				this.city = region;
+			}else if(this.city != null && region != null){
+				this.city += " ("+region+")";
+			}
+			this.as = getString(AS_NAME_KEY,null,jsonDetails);
+			String asNumber = getString(AS_NUMBER_KEY,null,jsonDetails);
+			if(this.as == null && asNumber != null){
+				this.as = asNumber;
+			}else if(this.as != null && asNumber != null){
+				this.as += " ("+asNumber+")";
+			}
+			this.poolAssignment = getString(POOL_ASSIGNMENT_KEY,null,jsonDetails);
+			this.geoLatitude = getDouble(GEO_LATITUDE_KEY,Double.NaN,jsonDetails);
+			this.geoLongitude = getDouble(GEO_LONGITUDE_KEY,Double.NaN,jsonDetails);
+			this.geoInfo = jsonDetails.has(GEO_LATITUDE_KEY) && jsonDetails.has(GEO_LONGITUDE_KEY);
 			
 			this.advertisedBandwidth = getLong(ADVERTISED_BANDWIDTH_KEY, 0, jsonDetails);
 			this.advertisedBandwidthString = BandwidthUtil.getBandwidthString(this.advertisedBandwidth);
@@ -245,6 +275,14 @@ public class DetailsData implements Serializable {
 	
 	public boolean hasGeoInformation(){
 		return this.geoInfo;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public String getAs() {
+		return as;
 	}
 
 }
