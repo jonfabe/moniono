@@ -58,7 +58,7 @@ public class FavIconClickListener implements OnClickListener {
 					this.details.getNickname(), this.type.getIdentifier());
 		}
 		this.db.close();
-		this.activity.setEditMode(false);
+		this.activity.setDbId(this.dbId);
 	}
 
 }

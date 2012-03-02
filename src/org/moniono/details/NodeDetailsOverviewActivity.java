@@ -363,9 +363,10 @@ public class NodeDetailsOverviewActivity extends Activity {
 		this.setResult(RESULT_OK);
 		this.finish();
 	}
-
-	public void setEditMode(boolean newEditMode) {
-		this.editMode = newEditMode;
+	
+	public void setDbId(long newDbId) {
+		this.dbId = newDbId;
+		this.editMode = false;
 		this.setGui();
 	}
 
