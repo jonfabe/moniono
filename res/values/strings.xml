@@ -67,6 +67,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     <string name="months">Months</string>
     <string name="nickname">Nickname</string>
     <string name="no_nodes">No favorites configured yet!</string>
+    <string name="offline">offline</string>
+    <string name="online">online</string>
+    <string name="online_state">Connection</string>
     <string name="platform">Platform</string>
     <string name="policy">Policy</string>
     <string name="pool_assignment">Pool Assignment</string>

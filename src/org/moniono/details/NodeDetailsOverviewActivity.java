@@ -131,26 +131,37 @@ public class NodeDetailsOverviewActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.db = new NodesDbAdapter(this);
-		setContentView(R.layout.relay_details);
-		Bundle extras = getIntent().getExtras();
 
+		/* Switch to the history layout. */
+		setContentView(R.layout.relay_details);
+
+		/* Receive node details information from intent extras. */
+		Bundle extras = getIntent().getExtras();
 		this.details = (DetailsData) extras.get(NODE_DATA.toString());
 
+		/*
+		 * Set nickname text field value. This field is special, because its
+		 * value will change if the node is chosen as favorite and the nickname
+		 * is edited.
+		 */
 		this.nicknameText = (TextView) findViewById(R.id.relay_details_nickname);
 		this.nicknameText.setText(this.details.getNickname());
 
+		this.nicknameEdit = (EditText) findViewById(R.id.nickname_input);
+		
+		/* Determine node type. */
 		if (extras.getBoolean(IS_RELAY.toString())) {
 			this.type = NodeType.RELAY;
 		} else {
 			this.type = NodeType.BRIDGE;
 		}
-		this.nicknameEdit = (EditText) findViewById(R.id.nickname_input);
-
+		
 		this.fingerprint = this.details.getFingerprint();
-		TextView mFingerprintView = (TextView) findViewById(R.id.relay_details_hash);
-		mFingerprintView.setText(this.fingerprint.substring(0, 20));
+		
+		/* Set field values through execution of helper method. */
 		if (this.details != null) {
+			this.setValue(this.fingerprint,
+					R.id.relay_details_hash, R.id.relay_details_contact_row);
 			this.setValue(this.details.getContact(),
 					R.id.relay_details_contact, R.id.relay_details_contact_row);
 			this.setValue(this.details.getPlatform(),
@@ -172,23 +183,30 @@ public class NodeDetailsOverviewActivity extends Activity {
 			this.setValue(this.details.getPoolAssignment(),
 					R.id.relay_details_pool_assignment,
 					R.id.relay_details_pool_assignment_row);
-			this.setValue(this.details.getAs(),
-					R.id.relay_details_as,
+			this.setValue(this.details.getAs(), R.id.relay_details_as,
 					R.id.relay_details_as_row);
-			this.setValue(this.details.getCity(),
-					R.id.relay_details_city,
+			this.setValue(this.details.getCity(), R.id.relay_details_city,
 					R.id.relay_details_city_row);
 			if (this.details.hasGeoInformation()) {
-				this.setValue(Double.toString(this.details.getGeoLatitude())+"/"+Double.toString(this.details.getGeoLongitude()),
-						R.id.relay_details_geo,
-						R.id.relay_details_geo_row);
+				this.setValue(
+						Double.toString(this.details.getGeoLatitude())
+								+ "/"
+								+ Double.toString(this.details
+										.getGeoLongitude()),
+						R.id.relay_details_geo, R.id.relay_details_geo_row);
 			}
 
+			/* Set online state  */
+			TextView onlineState = (TextView) findViewById(R.id.relay_details_online);
 			if (this.details.isRunning()) {
-				this.nicknameText.setTextColor(getResources().getColor(
+				this.setValue(getResources().getString(R.string.online), R.id.relay_details_online,
+						R.id.relay_details_online_row);
+				onlineState.setTextColor(getResources().getColor(
 						R.color.online));
 			} else {
-				this.nicknameText.setTextColor(getResources().getColor(
+				this.setValue(getResources().getString(R.string.offline), R.id.relay_details_online,
+						R.id.relay_details_online_row);
+				onlineState.setTextColor(getResources().getColor(
 						R.color.offline));
 			}
 		}
@@ -216,6 +234,8 @@ public class NodeDetailsOverviewActivity extends Activity {
 			TableRow row = (TableRow) findViewById(R.id.relay_details_family_row);
 			row.setVisibility(View.VISIBLE);
 		}
+
+		this.db = new NodesDbAdapter(this);
 
 		this.dbId = this.db.fetchNodeIdByFingerprint(this.fingerprint);
 
@@ -263,11 +283,13 @@ public class NodeDetailsOverviewActivity extends Activity {
 	}
 
 	private void setValue(String text, int viewId, int rowId) {
+		TableRow row = (TableRow) findViewById(rowId);
 		if (text != null && !text.equals("") && !text.equals("null")) {
 			TextView view = (TextView) findViewById(viewId);
 			view.setText(text);
-			TableRow row = (TableRow) findViewById(rowId);
 			row.setVisibility(View.VISIBLE);
+		}else{
+			row.setVisibility(View.GONE);
 		}
 	}
 
